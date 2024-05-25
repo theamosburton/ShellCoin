@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+    "build": "webpack --mode production"
+>>>>>>> 0201f1cf6ab2d15616f3a8e0263abaa7fff91786
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "ejs": "^3.1.10",
+>>>>>>> 0201f1cf6ab2d15616f3a8e0263abaa7fff91786
     "express": "^4.19.2"
   }
 }
