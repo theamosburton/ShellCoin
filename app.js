@@ -3,11 +3,11 @@ const path = require('path');
 require('dotenv').config();
 const passport = require('passport');
 const axios = require('axios');
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cookieSession = require('cookie-session');
 const app = express();
 const port = process.env.PORT || 8080;
 const { connect, client } = require('./controller/db');
+const { log } = require('console');
 
 
 app.use(cookieSession({
@@ -34,14 +34,13 @@ app.get('/login', (req, res) => {
 app.get('/env', (req, res) => {
     res.json({
       gt_client: process.env.gt_client,
-      redirect : process.env.redirect
+      redirect: process.env.redirect,
     });
   });
-
-
+  
 const clientID = process.env.gt_client;
 const clientSecret = process.env.gt_secret;
-app.get('/auth/github/', async (req, res) => {
+app.get('/auth/github', async (req, res) => {
     const requestToken = req.query.code;
     const tokenResponse = await axios({
         method: 'post',
@@ -60,7 +59,19 @@ app.get('/auth/github/', async (req, res) => {
         }
     });
 
-    res.json(userResponse.data);
+    const userResponseEmail = await axios({
+        method: 'get',
+        url: 'https://api.github.com/user/emails',
+        headers: {
+            Authorization: `token ${accessToken}`
+        }
+    });
+    const responseData = {
+        userData: userResponse.data,
+        userEmails: userResponseEmail.data
+    };
+    console.log(responseData);
+    res.json(responseData);
 });
 
 
