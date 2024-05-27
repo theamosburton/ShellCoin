@@ -12,21 +12,30 @@ function toggleMenus(){
         showMenus.style.display = 'flex';
     }
 }
-function handleCredentialResponse(response) {
-    const responsePayload = decodeJWT(response.credential);
-    console.log(responsePayload);
-    // console.log(responsePayload.birthdays);
-}
-function decodeJWT(jwtToken) {
-    const payload = JSON.parse(window.atob(jwtToken.split('.')[1]));
-    return payload;
-  }
+
+
+// function handleCredentialResponse(response) {
+// }
+// function decodeJWT(jwtToken) {
+//     const payload = JSON.parse(window.atob(jwtToken.split('.')[1]));
+//     return payload;
+//   }
+// window.onload = function () {
+//     google.accounts.id.initialize({
+//         client_id: '633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com',
+//         callback: handleCredentialResponse
+//     });
+//     document.getElementById('loginButton').addEventListener('click', function () {
+//         google.accounts.id.prompt();
+//     });
+// };
+
 window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: '633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com',
-        callback: handleCredentialResponse
-    });
     document.getElementById('loginButton').addEventListener('click', function () {
-        google.accounts.id.prompt();
+        window.location.href = '/login';
     });
 };
+
+function onGoogleSignIn(response){
+
+}

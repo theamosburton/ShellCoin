@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    background-color:hsl(240deg 48.15% 10.59%);
+    background-image: url('/images/loginback.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: hsl(240deg 48.15% 10.59%);
+    background-blend-mode: luminosity;
+}
+
+.topViewBox{
+    max-width: 1400px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewArea{
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
