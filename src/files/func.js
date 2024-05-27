@@ -31,17 +31,19 @@ function toggleMenus() {
 // };
 
 let client_id = "";
+let redirect = ""
 fetch('/env')
       .then(response => response.json())
       .then(env => {
-        client_id = env.gt_client
+        client_id = env.gt_client,
+        redirect = env.redirect
       });
 
 
 function onGithubLogin(){
     const clientID = client_id; // Replace with your GitHub Client ID
-    const redirectURI = 'http://localhost:8080/auth/github/'; // Replace with your GitHub redirect URI
-    const scope = 'user:email'; // Scope of the access reques
+    const redirectURI = redirect; // Replace with your GitHub redirect URI
+    const scope = 'user'; // Scope of the access reques
     const authURL = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`;
     window.location.href = authURL;
 }

@@ -33,14 +33,15 @@ app.get('/login', (req, res) => {
 
 app.get('/env', (req, res) => {
     res.json({
-      gt_client: process.env.gt_client
+      gt_client: process.env.gt_client,
+      redirect : process.env.redirect
     });
   });
 
 
 const clientID = process.env.gt_client;
 const clientSecret = process.env.gt_secret;
-app.get('/auth/github', async (req, res) => {
+app.get('/auth/github/', async (req, res) => {
     const requestToken = req.query.code;
     const tokenResponse = await axios({
         method: 'post',
