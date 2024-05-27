@@ -33,20 +33,19 @@ body{
 
 .viewArea{
     padding: 20px;
-    border: 1px solid #380497;
+    border: 1px solid #cab8ec;
     border-radius: 10px;
     background-color: #0a001d;
     box-shadow: 0px 0px 8px 2px #161616;
     margin: 20px 0px;
     margin-top: -50px;
-    /* min-width: 400px; */
-    min-height: 200px;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 .loginTitle{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    font-size: larger;
     font-family: Geometric;
     color: aliceblue;
     display: flex;
@@ -75,4 +74,8 @@ body{
     height: 18px;
     width: 18px;
     margin-left: 10px;
+}
+
+.loginModes{
+    width: 100%;
 }
