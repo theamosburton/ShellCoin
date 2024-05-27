@@ -13,10 +13,14 @@ function toggleMenus(){
     }
 }
 function handleCredentialResponse(response) {
-    console.log("Encoded JWT ID token: " + response.credential);
-    // You can send this token to your server for further processing
+    const responsePayload = decodeJWT(response.credential);
+    console.log(responsePayload);
+    // console.log(responsePayload.birthdays);
 }
-
+function decodeJWT(jwtToken) {
+    const payload = JSON.parse(window.atob(jwtToken.split('.')[1]));
+    return payload;
+  }
 window.onload = function () {
     google.accounts.id.initialize({
         client_id: '633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com',
