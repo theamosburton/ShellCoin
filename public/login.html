@@ -10,24 +10,32 @@
 <body>
     <div class="topViewBox">
         <div class="viewArea">
-            <div class="loginModes">
-                <div id="g_id_onload"
-                data-client_id="633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com"
-                data-context="use"
-                data-ux_mode="popup"
-                data-callback="onGoogleSignIn"
-                data-auto_prompt="false">
+            <div class="loginTitle">
+                <span>Login With</span>
             </div>
 
-            <div class="g_id_signin"
-                data-type="standard"
-                data-shape="pill"
-                data-theme="outline"
-                data-text="continue_with"
-                data-size="large"
-                data-logo_alignment="left">
+            <div class="loginModes">
+                <a class="github-btn" id="github-login-btn">Login with GitHub <img src="brands/gtlogo.png" alt=""> </a>
             </div>
+            <div class="loginModes">
+                <div id="g_id_onload"
+                    data-client_id="633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com"
+                    data-context="use"
+                    data-ux_mode="popup"
+                    data-callback="onGoogleSignIn"
+                    data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-shape="pill"
+                    data-theme="outline"
+                    data-text="continue_with"
+                    data-size="large"
+                    data-logo_alignment="left">
+                </div>
             </div>
+
             
         </div>
     </div>
