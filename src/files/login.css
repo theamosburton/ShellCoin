@@ -20,6 +20,7 @@ body{
     background-size: cover;
     background-color: hsl(240deg 48.15% 10.59%);
     background-blend-mode: luminosity;
+    backdrop-filter: blur(1px);
 }
 
 .topViewBox{
@@ -32,7 +33,7 @@ body{
 }
 
 .viewArea{
-    padding: 20px;
+    padding: 20px 30px 30px 30px;
     border: 1px solid #cab8ec;
     border-radius: 10px;
     background-color: #0a001d;
@@ -73,7 +74,7 @@ body{
 .github-btn img{
     height: 18px;
     width: 18px;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .loginModes{
