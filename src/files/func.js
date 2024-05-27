@@ -19,7 +19,7 @@ function handleCredentialResponse(response) {
 
 window.onload = function () {
     google.accounts.id.initialize({
-        client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
+        client_id: '633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com',
         callback: handleCredentialResponse
     });
     document.getElementById('loginButton').addEventListener('click', function () {

@@ -1,7 +1,18 @@
 const express = require('express');
 const path = require('path');
+const passport = require('passport');
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const cookieSession = require('cookie-session');
 const app = express();
 const port = process.env.PORT || 8080;
+const { connect, client } = require('./controller/db');
+
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2']
+  }));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
