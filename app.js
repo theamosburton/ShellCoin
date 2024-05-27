@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 const passport = require('passport');
 const axios = require('axios');
 // const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -29,8 +30,16 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-const clientID = 'Ov23libe9d8wlQxjU4XO';
-const clientSecret = '691a27b14a17474f03142ba6c63347ab9a9f592d';
+
+app.get('/env', (req, res) => {
+    res.json({
+      gt_client: process.env.gt_client
+    });
+  });
+
+
+const clientID = process.env.gt_client;
+const clientSecret = process.env.gt_secret;
 app.get('/auth/github', async (req, res) => {
     const requestToken = req.query.code;
     const tokenResponse = await axios({
