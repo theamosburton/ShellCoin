@@ -18,17 +18,6 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 const commonFunctions = async (req, res, next) => {
-    const database = await Database.connect();
-    if (database.status) {
-        
-    }else{
-        const setCookieHeader = cookieOnly.serialize('Status', database.conn, {
-            path: '/',
-            httpOnly: true,
-            maxAge: 3600 * 24 * 30 * 365 * 2 // Cookie will expire in 2 years
-          });
-          res.setHeader('Set-Cookie', setCookieHeader);
-    }
     await Visit.initialize(req, res);
     next();
 };
