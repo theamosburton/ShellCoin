@@ -21,7 +21,7 @@ const commonFunctions = async (req, res, next) => {
     if (database.status) {
         
     }else{
-        res.send(database.conn);
+        res.status(500).send(database.conn);
     }
     await Visit.initialize(req, res);
     next();
