@@ -1,9 +1,11 @@
 const { log } = require("node:console");
 const { Database } = require("./db");
 let crypto = require('node:crypto');
-async function createNewID(collectionName, prefix) {
+let INCREMENT = 0;
+async function createNewID(collectionName, prefix, uniqueProp) {
     const database = await Database.connect();
     if(database.status){
+        let prop = uniqueProp;
         const conn = database.conn;
         const collection = conn.collection(collectionName);
 
@@ -13,13 +15,15 @@ async function createNewID(collectionName, prefix) {
         const day = today.getDate().toString().padStart(2, '0');
         const newID = year + month + day;
         const formattedDate = `${year}-${month}-${day}`;
-        const query = { date: formattedDate };
-        const results = await collection.find(query).toArray();
+        const results = await collection.find({date: formattedDate }).toArray();
         let noOfRow;
         if (!results || results.length === 0) {
             noOfRow = 0;
         } else {
             let x = results.length;
+            if (INCREMENT > 0) {
+                x = x + 1;
+            }
             noOfRow = x;
         }
         let paddedNoOfRow;
@@ -45,7 +49,15 @@ async function createNewID(collectionName, prefix) {
             paddedNoOfRow = noOfRow;
         }
         const newIDWithPadding = prefix + newID + paddedNoOfRow;
-        return {status:true, log:newIDWithPadding};
+        var newQuery = {};
+        newQuery[prop] = newIDWithPadding;
+        const ifNewIDExists = await collection.findOne(newQuery);
+        if (ifNewIDExists) {
+            INCREMENT = INCREMENT +1;
+            await createNewID(collectionName, prefix, uniqueProp);
+        }else{
+            return {status:true, log:newIDWithPadding};
+        }
     }else{
         return {status:false, log:database.conn};
     }

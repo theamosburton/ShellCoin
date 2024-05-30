@@ -14,9 +14,9 @@ GuestVisit.initialize = async (req, res) => {
         var guestID = checkCookieResult.log;
         const sessionStatus = await GuestVisit.checkSession(req.session.GSI);
         if (sessionStatus) {
-            await GuestVisit.updateVisits(req.session.GSI, guestID, req);
+            await GuestVisit.updateVisits(req.session.GSI, req);
         } else {
-            await GuestVisit.makeSession(guestID, req);
+            await GuestVisit.createSession(guestID, req);
         }
     } else {
         await GuestVisit.addNewGuest(req,res);
@@ -30,7 +30,7 @@ GuestVisit.checkCookie = async (req)=>{
     const conn = database.conn;
     const collection = conn.collection('Guests');
     const decGuestID = decrypt(guestID);
-    const result = await collection.findOne({ guestID: decGuestID });
+    const result = await collection.findOne({ gID: decGuestID });
     if (result ) {
       return {status:true, log:decGuestID};
     }else{
@@ -41,7 +41,7 @@ GuestVisit.checkCookie = async (req)=>{
 }
 
 GuestVisit.addNewGuest = async (req, res)=>{
-    var guestID = await createNewID("Guests", "GID");
+    var guestID = await createNewID("Guests", "G", 'gID');
     if (!guestID.status) {
       return false;
     }
@@ -49,13 +49,7 @@ GuestVisit.addNewGuest = async (req, res)=>{
     if(database.status){
       const conn = database.conn;
       const collection = conn.collection('Guests');
-      const userDevice = useragent;
-      const deviceInfo = {
-        browserName: userDevice.browser,
-        deviceType: userDevice.isDesktop ? 'Desktop' : userDevice.isMobile ? 'Mobile' : 'Tablet',
-        platform: userDevice.platform,
-        browser: userDevice.browser
-      }
+      const httpReferer = req.headers['referer'] || '';
       guestID = guestID.log;
       const dateTime = Date.now();
       const date = new Date().toISOString().split('T')[0];
@@ -63,24 +57,26 @@ GuestVisit.addNewGuest = async (req, res)=>{
       const setCookieHeader = cookieOnly.serialize('GID', encryptedID, {
         path: '/',
         httpOnly: true,
-        maxAge: 3600 * 24 * 30 * 365 * 2 // Cookie will expire in 2 years
+        maxAge: 3600 * 24 * 30 * 365 // Cookie will expire in 1 years
       });
+      const referedByPerson = req.query.ref || '';
       res.setHeader('Set-Cookie', setCookieHeader);
       const guestData = {
         date: date,
-        guestID: guestID,
-        deviceInfo:deviceInfo
+        gID: guestID,
+        rfPrsn:referedByPerson,
+        httpRef: httpReferer
       };
       const result = await collection.insertOne(guestData);
       if (result.acknowledged) {
-        await GuestVisit.makeSession(guestID, req)
+        await GuestVisit.createSession(guestID, req)
       }
     }
     await Database.disconnect();
 }
 
-GuestVisit.makeSession = async (guestID, req)=>{
-  var sessionID = await createNewID("Sessions", "GSI");
+GuestVisit.createSession = async (guestID, req)=>{
+  var sessionID = await createNewID("Sessions", "GS", 'sID');
   if (!sessionID.status) {
     return false;
   }
@@ -92,43 +88,46 @@ GuestVisit.makeSession = async (guestID, req)=>{
     req.session.GSI = sessionID;
     const guestIP = req.clientIp;
     const date = new Date().toISOString().split('T')[0];
-    await GuestVisit.updateVisits(sessionID, guestID, req);
+    const visitedPage = req.originalUrl;
+    const visitTime = Math.floor(Date.now() / 1000);
     const sessionData = {
       date: date,
-      sessionID: sessionID,
-      personID: guestID,
-      ipAddress: guestIP
+      sID: sessionID,
+      pID: guestID,
+      ipAdd: guestIP,
+      vCont: 1,
+      vPge: [visitedPage],
+      vTme: [visitTime]
+
     };
     await collection.insertOne(sessionData);
   }
   await Database.disconnect();
 }
 
-GuestVisit.updateVisits = async (sessionID, guestID, req)=> {
+GuestVisit.updateVisits = async (sessionID, req)=> {
   const visitedPage = req.originalUrl;
-  if (visitedPage == '/env') {
+  if (visitedPage == '/env' || visitedPage == '/favicon.ico') {
     return false;
   }
   const database = await Database.connect();
   if(database.status){
     const conn = database.conn;
-    const collection = conn.collection('Visits');
+    const collection = conn.collection('Sessions');
     const visitTime = Math.floor(Date.now() / 1000);
-    const httpReferer = req.headers['referer'] || '';
-    const referedByPage = httpReferer.replace(/(^https?:\/\/)/, "");
-    const referedByPerson = req.query.ref || '';
     const visitedPage = req.originalUrl;
-
-    const visitData = {
-        sessionID: sessionID,
-        personID: guestID,
-        visitTime: visitTime,
-        visitedPage: visitedPage,
-        referedByPerson: referedByPerson,
-        referedByPage: referedByPage
-    };
-    const result = await collection.insertOne(visitData);
-    return true;
+    const fetchData = await collection.findOne({sID: sessionID})
+    var newVisitCount = fetchData.vCont + 1;
+    await collection.updateOne(
+      { sID: sessionID },
+      {
+          $set: { vCont: newVisitCount },
+          $push: { 
+            vPge: visitedPage,
+            vTme: visitTime 
+          }
+      }
+  );
   }
   await Database.disconnect();
 }
@@ -138,7 +137,7 @@ GuestVisit.existInDB = async (gID)=> {
     if(database.status){
       const conn = database.conn;
       const collection = conn.collection('Guests');
-      const result = await collection.findOne({ guestID: gID });
+      const result = await collection.findOne({ gID: gID });
       return !!result; // Convert result to boolean and return
     }else{
       return false;
@@ -170,7 +169,7 @@ GuestVisit.checkSession = async (sess) => {
     if(database.status){
       const conn = database.conn;
       const collection = conn.collection('Sessions');
-      const result = await collection.findOne({ sessionID: sess });
+      const result = await collection.findOne({ sID: sess });
       if (result) {
           return true;
       } else{
