@@ -36,8 +36,6 @@ GuestVisit.checkCookie = async (req)=>{
     }else{
       return {status:false, log:"No Guest Found"};
     }
-  }else{
-    console.log(database.conn);
   }
   await Database.disconnect();
 }

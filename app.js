@@ -6,6 +6,7 @@ require('dotenv').config();
 const authGithub = require('./API/githubAuth');
 const Login = require('./controller/login');
 const {Visit} = require('./controller/Visit');
+const { Database } = require('./controller/db');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
@@ -16,6 +17,12 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 const commonFunctions = async (req, res, next) => {
+    const database = await Database.connect();
+    if (database.status) {
+        
+    }else{
+        res.send(database.conn);
+    }
     await Visit.initialize(req, res);
     next();
 };
