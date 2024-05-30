@@ -20,7 +20,11 @@ async function connect() {
     }
 }
 
+async function disconnect(){
+    await client.close();
+}
+
 module.exports = { Database:{connect,
-    client}
+    client, disconnect}
     
 };

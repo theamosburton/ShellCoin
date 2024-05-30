@@ -37,6 +37,7 @@ GuestVisit.checkCookie = async (req)=>{
       return {status:false, log:"No Guest Found"};
     }
   }
+  await Database.disconnect();
 }
 
 GuestVisit.addNewGuest = async (req, res)=>{
@@ -75,6 +76,7 @@ GuestVisit.addNewGuest = async (req, res)=>{
         await GuestVisit.makeSession(guestID, req)
       }
     }
+    await Database.disconnect();
 }
 
 GuestVisit.makeSession = async (guestID, req)=>{
@@ -99,6 +101,7 @@ GuestVisit.makeSession = async (guestID, req)=>{
     };
     await collection.insertOne(sessionData);
   }
+  await Database.disconnect();
 }
 
 GuestVisit.updateVisits = async (sessionID, guestID, req)=> {
@@ -127,6 +130,7 @@ GuestVisit.updateVisits = async (sessionID, guestID, req)=> {
     const result = await collection.insertOne(visitData);
     return true;
   }
+  await Database.disconnect();
 }
   
 GuestVisit.existInDB = async (gID)=> {
@@ -139,6 +143,7 @@ GuestVisit.existInDB = async (gID)=> {
     }else{
       return false;
     }
+    await Database.disconnect();
 }
 
 GuestVisit.sessionExist = async (req)=> {
@@ -172,6 +177,7 @@ GuestVisit.checkSession = async (sess) => {
           return false;
       }
     }
+    await Database.disconnect();
 }
       
 

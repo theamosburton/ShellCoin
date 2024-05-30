@@ -49,6 +49,7 @@ async function createNewID(collectionName, prefix) {
     }else{
         return {status:false, log:database.conn};
     }
+    await Database.disconnect();
 }
 const authKey = process.env.authSecret;
 const iv = crypto.randomBytes(16);
