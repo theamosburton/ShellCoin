@@ -1,24 +1,37 @@
 const express = require('express');
+const session = require('cookie-session');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
-const passport = require('passport');
-const axios = require('axios');
-const cookieSession = require('cookie-session');
-const app = express();
+const authGithub = require('./API/githubAuth');
+const Login = require('./controller/login');
+const {Visit} = require('./controller/Visit');
 const port = process.env.PORT || 8080;
-const { connect, client } = require('./controller/db');
-const { log } = require('console');
-
-
-app.use(cookieSession({
-    keys: ['key1', 'key2']
-  }));
-
+const app = express();
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.sessionSecret, // Replace with your own secret key
+    resave: false,           // Prevents resaving session if unmodified
+    saveUninitialized: true, // Save new but unmodified sessions
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
+const commonFunctions = async (req, res, next) => {
+    await Visit.initialize(req, res);
+    next();
+};
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.urlencoded());
+app.use(express.json());
 
+app.use(commonFunctions);
+
+
+
+
+
+// Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
@@ -30,53 +43,24 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-
 app.get('/env', (req, res) => {
     res.json({
-      gt_client: process.env.gt_client,
-      redirect: process.env.redirect,
+     gt_client: process.env.gt_client,
+     redirect: process.env.redirect,
     });
-  });
-  
-const clientID = process.env.gt_client;
-const clientSecret = process.env.gt_secret;
+});
+
 app.get('/auth/github', async (req, res) => {
-    const requestToken = req.query.code;
-    const tokenResponse = await axios({
-        method: 'post',
-        url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
-        headers: {
-            accept: 'application/json'
-        }
-    });
+    const userInfo = await authGithub(req, process.env.gt_client, process.env.gt_secret);
+    res.json(userInfo);
+});
 
-    const accessToken = tokenResponse.data.access_token;
-    const userResponse = await axios({
-        method: 'get',
-        url: 'https://api.github.com/user',
-        headers: {
-            Authorization: `token ${accessToken}`
-        }
-    });
-
-    const userResponseEmail = await axios({
-        method: 'get',
-        url: 'https://api.github.com/user/emails',
-        headers: {
-            Authorization: `token ${accessToken}`
-        }
-    });
-    const responseData = {
-        userData: userResponse.data,
-        userEmails: userResponseEmail.data
-    };
-    console.log(responseData);
-    res.json(responseData);
+app.post('/auth/google', async (req, res) => {
+    const userInfo = req.body;
 });
 
 
+// Starting Server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-// 691a27b14a17474f03142ba6c63347ab9a9f592d

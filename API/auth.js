@@ -1,1 +1,0 @@
-const { connect, client } = require('./db');

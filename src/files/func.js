@@ -1,3 +1,5 @@
+
+
 function toggleMenus() {
     var showMenus = document.getElementById('expandMenusIcon');
     var hideMenus = document.getElementById('hideMenusIcon');
@@ -13,22 +15,6 @@ function toggleMenus() {
     }
 }
 
-
-// function handleCredentialResponse(response) {
-// }
-// function decodeJWT(jwtToken) {
-//     const payload = JSON.parse(window.atob(jwtToken.split('.')[1]));
-//     return payload;
-//   }
-// window.onload = function () {
-//     google.accounts.id.initialize({
-//         client_id: '633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com',
-//         callback: handleCredentialResponse
-//     });
-//     document.getElementById('loginButton').addEventListener('click', function () {
-//         google.accounts.id.prompt();
-//     });
-// };
 
 let client_id = "";
 let redirect = ""
@@ -47,5 +33,28 @@ function onGithubLogin(){
     const authURL = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`;
     window.location.href = authURL;
 }
-
-function onGoogleSignIn(){}
+function decodeJWT(jwtToken) {
+    const payload = JSON.parse(window.atob(jwtToken.split('.')[1]));
+    return payload;
+}
+function onGoogleSignIn(response){
+    const res = decodeJWT(response.credential);
+        login(res);
+        async function login(res){
+            const logUrl = '/auth/google';
+            var encyDat = {
+                'name' : `${res.name}`,
+                'username':'',
+                'profilePic': `${res.picture}`,
+                'email': `${res.email}`
+            };
+            const response = await fetch(logUrl, {
+                method: 'post',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(encyDat)
+              });
+            var isLogged = await response.json();
+        }
+}
