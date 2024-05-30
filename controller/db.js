@@ -1,8 +1,14 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const url = process.env.dbURL;
 const dbName = 'shellcoin';
-const client = new MongoClient(url);
+const client = new MongoClient(url, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
 async function connect() {
     try {
