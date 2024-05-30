@@ -65,11 +65,13 @@ GuestVisit.addNewGuest = async (req, res)=>{
         httpOnly: true,
         maxAge: 3600 * 24 * 30 * 365 * 2 // Cookie will expire in 2 years
       });
+      const referedByPerson = req.query.ref || '';
       res.setHeader('Set-Cookie', setCookieHeader);
       const guestData = {
         date: date,
         guestID: guestID,
-        deviceInfo:deviceInfo
+        deviceInfo:deviceInfo,
+        referedByPerson:referedByPerson
       };
       const result = await collection.insertOne(guestData);
       if (result.acknowledged) {
