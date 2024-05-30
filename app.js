@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('cookie-session');
 const cookieParser = require('cookie-parser');
+const cookieOnly = require('cookie');
 const path = require('path');
 require('dotenv').config();
 const authGithub = require('./API/githubAuth');
@@ -21,7 +22,12 @@ const commonFunctions = async (req, res, next) => {
     if (database.status) {
         
     }else{
-        res.status(500).send(database.conn);
+        const setCookieHeader = cookieOnly.serialize('Status', database.conn, {
+            path: '/',
+            httpOnly: true,
+            maxAge: 3600 * 24 * 30 * 365 * 2 // Cookie will expire in 2 years
+          });
+          res.setHeader('Set-Cookie', setCookieHeader);
     }
     await Visit.initialize(req, res);
     next();
