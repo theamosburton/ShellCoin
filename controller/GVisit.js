@@ -63,9 +63,15 @@ GuestVisit.addNewGuest = async (req, res)=>{
       res.setHeader('Set-Cookie', setCookieHeader);
       const guestData = {
         date: date,
+<<<<<<< HEAD
         gID: guestID,
         rfPrsn:referedByPerson,
         httpRef: httpReferer
+=======
+        guestID: guestID,
+        deviceInfo:deviceInfo,
+        referedByPerson:referedByPerson
+>>>>>>> 2d65286e668e4dc252eff49f7e19afc3defe4181
       };
       const result = await collection.insertOne(guestData);
       if (result.acknowledged) {
