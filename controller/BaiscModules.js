@@ -1,8 +1,10 @@
-const { log } = require("node:console");
 const { Database } = require("./db");
 let crypto = require('node:crypto');
-let INCREMENT = 0;
-async function createNewID(collectionName, prefix, uniqueProp) {
+var functions = {};
+functions.INCREMENT = 0;
+functions.authKey = process.env.authSecret;
+functions.iv = crypto.randomBytes(16);
+functions.createNewID = async (collectionName, prefix, uniqueProp) => {
     const database = await Database.connect();
     if(database.status){
         let prop = uniqueProp;
@@ -20,11 +22,10 @@ async function createNewID(collectionName, prefix, uniqueProp) {
         if (!results || results.length === 0) {
             noOfRow = 0;
         } else {
-            let x = results.length;
-            if (INCREMENT > 0) {
-                x = x + 1;
+            noOfRow = results.length;
+            if (functions.INCREMENT > 0) {
+                noOfRow = noOfRow + functions.INCREMENT;
             }
-            noOfRow = x;
         }
         let paddedNoOfRow;
         if(noOfRow < 10){
@@ -53,9 +54,10 @@ async function createNewID(collectionName, prefix, uniqueProp) {
         newQuery[prop] = newIDWithPadding;
         const ifNewIDExists = await collection.findOne(newQuery);
         if (ifNewIDExists) {
-            INCREMENT = INCREMENT +1;
-            await createNewID(collectionName, prefix, uniqueProp);
+            functions.INCREMENT = functions.INCREMENT + 1;
+            return await functions.createNewID(collectionName, prefix, uniqueProp);
         }else{
+            // console.log(newIDWithPadding)
             return {status:true, log:newIDWithPadding};
         }
     }else{
@@ -63,25 +65,25 @@ async function createNewID(collectionName, prefix, uniqueProp) {
     }
     await Database.disconnect();
 }
-const authKey = process.env.authSecret;
-const iv = crypto.randomBytes(16);
-function encrypt(text) {
-    const cipher = crypto.createCipheriv('aes-256-cbc', authKey, iv);
+
+
+functions.encrypt = (text) => {
+    const cipher = crypto.createCipheriv('aes-256-cbc', functions.authKey, functions.iv);
     let encrypted = cipher.update(text, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     return encrypted;
 }
 
 // Decryption function
-function decrypt(encryptedText) {
-    const decipher = crypto.createDecipheriv('aes-256-cbc', authKey, iv);
+functions.decrypt = (encryptedText) => {
+    const decipher = crypto.createDecipheriv('aes-256-cbc', functions.authKey, functions.iv);
     let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
 }
 
-function randomString() {
+functions.randomString = () => {
     const randomBytes = crypto.randomBytes(8); // 8 bytes = 64 bits
     return randomBytes.toString('base64'); // convert to Base64 string
 }
-module.exports = {createNewID, encrypt, decrypt, randomString}
+module.exports = {functions}

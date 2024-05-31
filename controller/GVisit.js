@@ -2,7 +2,7 @@ const requestIp = require('request-ip');
 const useragent = require('express-useragent');
 const cookieOnly = require('cookie');
 const { Database } = require('./db');
-const { createNewID, encrypt, decrypt } = require('./BaiscModules');
+const { functions } = require('./BaiscModules');
 
 const GuestVisit = {};
 
@@ -29,7 +29,7 @@ GuestVisit.checkCookie = async (req)=>{
   if(database.status){
     const conn = database.conn;
     const collection = conn.collection('Guests');
-    const decGuestID = decrypt(guestID);
+    const decGuestID = functions.decrypt(guestID);
     const result = await collection.findOne({ gID: decGuestID });
     if (result ) {
       return {status:true, log:decGuestID};
@@ -41,7 +41,7 @@ GuestVisit.checkCookie = async (req)=>{
 }
 
 GuestVisit.addNewGuest = async (req, res)=>{
-    var guestID = await createNewID("Guests", "G", 'gID');
+    var guestID = await functions.createNewID("Guests", "G", 'gID');
     if (!guestID.status) {
       return false;
     }
@@ -53,7 +53,7 @@ GuestVisit.addNewGuest = async (req, res)=>{
       guestID = guestID.log;
       const dateTime = Date.now();
       const date = new Date().toISOString().split('T')[0];
-      const encryptedID = encrypt(guestID);
+      const encryptedID = functions.encrypt(guestID);
       const setCookieHeader = cookieOnly.serialize('GID', encryptedID, {
         path: '/',
         httpOnly: true,
@@ -63,15 +63,9 @@ GuestVisit.addNewGuest = async (req, res)=>{
       res.setHeader('Set-Cookie', setCookieHeader);
       const guestData = {
         date: date,
-<<<<<<< HEAD
         gID: guestID,
         rfPrsn:referedByPerson,
         httpRef: httpReferer
-=======
-        guestID: guestID,
-        deviceInfo:deviceInfo,
-        referedByPerson:referedByPerson
->>>>>>> 2d65286e668e4dc252eff49f7e19afc3defe4181
       };
       const result = await collection.insertOne(guestData);
       if (result.acknowledged) {
@@ -82,7 +76,7 @@ GuestVisit.addNewGuest = async (req, res)=>{
 }
 
 GuestVisit.createSession = async (guestID, req)=>{
-  var sessionID = await createNewID("Sessions", "GS", 'sID');
+  var sessionID = await functions.createNewID("Sessions", "GS", 'sID');
   if (!sessionID.status) {
     return false;
   }
