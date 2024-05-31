@@ -20,7 +20,7 @@ class Login{
     }
 
     checkUserExists(data){
-
+       // do some stuff
     }
 
     addUser(data){
