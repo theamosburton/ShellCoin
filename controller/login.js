@@ -1,8 +1,5 @@
 const Database = require('./db');
 var Login = {};
-Login.initiliaze = () =>{
-
-}
 
 Login.preLogin = (req, res) => {
     const setCookieHeader = cookieOnly.serialize('referedBy', req.query.ref, {
