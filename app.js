@@ -5,9 +5,10 @@ const cookieOnly = require('cookie');
 const path = require('path');
 require('dotenv').config();
 const authGithub = require('./API/githubAuth');
-const Login = require('./controller/login');
+const {Login} = require('./controller/login');
 const {Visit} = require('./controller/Visit');
 const { Database } = require('./controller/db');
+const { checkReferal } = require('./API/referal');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
@@ -42,14 +43,22 @@ app.get('/account', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+    // Login.preLogin(req, res);
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-app.get('/env', (req, res) => {
+app.get('/API/js', (req, res) => {
     res.json({
      gt_client: process.env.gt_client,
      redirect: process.env.redirect,
     });
+});
+
+app.get('/API/checkReferal', (req, res) => {
+    var referalStatus = checkReferal(req, res);
+    res.json({
+        referalStatus: referalStatus,
+       });
 });
 
 app.get('/auth/github', async (req, res) => {

@@ -107,7 +107,7 @@ GuestVisit.createSession = async (guestID, req)=>{
 
 GuestVisit.updateVisits = async (sessionID, req)=> {
   const visitedPage = req.originalUrl;
-  if (visitedPage == '/env' || visitedPage == '/favicon.ico') {
+  if(visitedPage.startsWith('/API/') || visitedPage == '/favicon.ico') {
     return false;
   }
   const database = await Database.connect();

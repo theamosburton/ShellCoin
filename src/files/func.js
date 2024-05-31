@@ -18,7 +18,7 @@ function toggleMenus() {
 
 let client_id = "";
 let redirect = ""
-fetch('/env')
+fetch('/API/js')
       .then(response => response.json())
       .then(env => {
         client_id = env.gt_client,
@@ -58,3 +58,85 @@ function onGoogleSignIn(response){
             var isLogged = await response.json();
         }
 }
+
+
+window.onload = function () {
+    var referer = document.getElementById('applyReferer');
+    var applyRefLink = document.getElementById('applyReferalLink');
+    var applyReferal = document.getElementById('applyReferal');
+    var referalInput = document.getElementById('referalInput');
+    var getCookie = getCookie('ref');
+    if (getCookie != null) {
+        referer.style.display == 'none';
+        var refStatus = fetchRef(getCookie);
+        if(refStatus){
+            applyRefLink.style.color = 'rgb(0, 166, 255)';
+            applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${getCookie}</b></span>`;
+            applyRefLink.removeAttribute('onclick')
+        }else{
+            applyRefLink.style.color = 'tomato';
+            applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${getCookie}</b></span>`;
+        }
+        
+    }else{
+        referer.style.display == 'none';
+        applyRefLink.innerHTML = `<span>I have referal code</span>`;
+        applyRefLink.setAttribute('onclick', 'toggleReferal()');
+        applyRefLink.style.color = 'rgb(0, 166, 255)';
+
+
+        applyReferal.addEventListener('click', function() {
+            var refValue = referalInput.value;
+            var refStatus = fetchRef(refValue);
+            var referer = document.getElementById('applyReferer');
+            if(refStatus){
+                applyRefLink.style.color = 'rgb(0, 166, 255)';
+                applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
+                applyRefLink.removeAttribute('onclick')
+                referer.style.display = 'none';
+                setCookie('ref', refValue, 999999, false)
+            }else{
+                applyRefLink.style.color = 'tomato';
+                applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
+            }
+        });
+    }
+
+    async function fetchRef(referalCode){
+        await fetch(`/API/checkReferal?ref=${referalCode}`)
+        .then(response => response.json())
+        .then(ref => {
+            return ref.referalStatus
+        });
+    } 
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const cookies = document.cookie.split(';');
+        for(let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(nameEQ)) {
+                return cookie.substring(nameEQ.length);
+            }
+        }
+        return null;
+    }
+
+    function setCookie(name, value, days, secure) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        let cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        if (!secure) {
+            cookie += ';secure=false';
+        }
+        document.cookie = cookie;
+    }
+}
+function toggleReferal(){
+    var referer = document.getElementById('applyReferer');
+    if (referer.style.display == 'none') {
+        referer.style.display = 'flex';
+    }else{
+        referer.style.display = 'none';
+    }
+}
+

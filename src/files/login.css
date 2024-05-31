@@ -42,6 +42,7 @@ body{
     margin-top: -50px;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 .loginTitle{
@@ -63,7 +64,7 @@ body{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 20px 2px;
+    margin: 20px 2px 5px 2px;
     cursor: pointer;
     border-radius: 20px;
     font-family: Geometric;
@@ -76,11 +77,68 @@ body{
     width: 18px;
     margin-right: 10px;
 }
+.google-login{
+    margin: 15px;
+}
 
 .loginModes{
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.applyReferer{
+    margin-top: 15px;
+
+    flex-direction: column;
+}
+
+
+.applyReferer .button{
+    color: white;
+    background-color:slateblue;
+    /* font-family: Geometric; */
+    font-weight: bold;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.applyReferer input{
+    padding: 10px;
+    outline: 0;
+    border-radius: 20px;
+    border: 0px;
+    margin-top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(10, 151, 10);
+}
+
+.applyReferalLink{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: flex-start;
+    margin-top: 10px;
+    color: rgb(0, 166, 255);
+    font-size: small;
+    font-family: Geometric;
+}
+.applyReferalLink span{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.applyReferalLink:hover{
+    cursor: pointer;
+    color: rgb(0, 166, 255);
+}
 @media screen and (max-width: 600px) {
     .topViewBox{
        height: auto;

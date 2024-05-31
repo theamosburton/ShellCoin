@@ -15,31 +15,43 @@
             <div class="loginTitle">
                 <span>Continue With</span>
             </div>
-
+           
             <div class="loginModes">
                 <a class="github-btn" onclick="onGithubLogin()" id="github-login-btn"><img src="brands/gtlogo.png" alt="github logo"> Sign in with GitHub </a>
             </div>
-            <div class="loginModes">
+            
+            <div class="loginModes google-login">
                 <div id="g_id_onload"
                 data-client_id="633692520097-mk6mqhj19t50v5d9guvoogrb3uj0v2p4.apps.googleusercontent.com"
                 data-context="use"
                 data-ux_mode="popup"
                 data-callback="onGoogleSignIn"
                 data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin"
+                </div>
+                <div class="g_id_signin loginModes"
                 data-type="standard"
                 data-size="large"
                 data-theme="outline"
                 data-text="sign_in_with"
                 data-shape="pill"
                 data-logo_alignment="left">
+                </div>
             </div>
+            <hr width="100%">
+            <div class="applyReferalLink" onclick="toggleReferal()" id="applyReferalLink">
+                <span>I have referel code</span>
             </div>
+           
+
+            <div id="applyReferer" class="loginModes applyReferer" style="display: none;">
+                <input id="referalInput" type="text" placeholder="Enter referel code">
+                <span id="applyReferal" class="button">Apply</span>
+            </div>
+            
 
             
         </div>
     </div>
-    <script src="/files/func.js"></script>
+    <script src="/files/func.js?v=1.0"></script>
 </body>
 </html>

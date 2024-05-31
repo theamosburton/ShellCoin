@@ -27,3 +27,4 @@ function toggleMenus(){
         showMenus.style.display = 'flex';
     }
 }
+
