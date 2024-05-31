@@ -1,9 +1,8 @@
 const Database = require('./db');
-<<<<<<< HEAD
 const cookieOnly = require('cookie');
 var Login = {};
 Login.initiliaze = () =>{
-=======
+
 
 class Login{
     connect = Database.connect;
