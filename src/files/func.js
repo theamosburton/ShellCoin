@@ -73,29 +73,33 @@ window.onload = function () {
             applyRefLink.style.color = 'rgb(0, 166, 255)';
             applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${getCookie}</b></span>`;
             referalInput.value = getCookie;
+            referer.style.display = 'none';
         }else{
             applyRefLink.style.color = 'tomato';
             applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${getCookie}</b></span>`;
+            applyReferal.innerHTML = 'Update';
         }
         
     }else{
         referer.style.display == 'none';
         applyRefLink.innerHTML = `<span>I have referal code</span>`;
-        applyRefLink.setAttribute('onclick', 'toggleReferal()');
         applyRefLink.style.color = 'rgb(0, 166, 255)';
     }
 
-
+}
     applyReferal.addEventListener('click', function() {
         var applyRefLink = document.getElementById('applyReferalLink');
         var referalInput = document.getElementById('referalInput');
+        var applyReferal = document.getElementById('applyReferal');
         var refValue = referalInput.value;
         var refStatus = fetchRef(refValue);
+        var referer = document.getElementById('applyReferer');
         if(refStatus){
             applyRefLink.style.color = 'rgb(0, 166, 255)';
             applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
-            applyRefLink.removeAttribute('onclick');
-            setCookie('ref', refValue, 999999, false)
+            setCookie('ref', refValue, 999999, false);
+            referer.style.display = 'none';
+            applyReferal.innerHTML = 'update';
         }else{
             applyRefLink.style.color = 'tomato';
             applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
@@ -109,7 +113,6 @@ window.onload = function () {
         .then(ref => {
             return ref.referalStatus
         });
-    } 
     function getCookie(name) {
         const nameEQ = name + "=";
         const cookies = document.cookie.split(';');
@@ -132,6 +135,8 @@ window.onload = function () {
         document.cookie = cookie;
     }
 }
+
+
 function toggleReferal(){
     var referer = document.getElementById('applyReferer');
     if (referer.style.display == 'none') {
