@@ -72,7 +72,7 @@ window.onload = function () {
         if(refStatus){
             applyRefLink.style.color = 'rgb(0, 166, 255)';
             applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${getCookie}</b></span>`;
-            applyRefLink.removeAttribute('onclick')
+            referalInput.value = getCookie;
         }else{
             applyRefLink.style.color = 'tomato';
             applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${getCookie}</b></span>`;
@@ -83,24 +83,25 @@ window.onload = function () {
         applyRefLink.innerHTML = `<span>I have referal code</span>`;
         applyRefLink.setAttribute('onclick', 'toggleReferal()');
         applyRefLink.style.color = 'rgb(0, 166, 255)';
-
-
-        applyReferal.addEventListener('click', function() {
-            var refValue = referalInput.value;
-            var refStatus = fetchRef(refValue);
-            var referer = document.getElementById('applyReferer');
-            if(refStatus){
-                applyRefLink.style.color = 'rgb(0, 166, 255)';
-                applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
-                applyRefLink.removeAttribute('onclick')
-                referer.style.display = 'none';
-                setCookie('ref', refValue, 999999, false)
-            }else{
-                applyRefLink.style.color = 'tomato';
-                applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
-            }
-        });
     }
+
+
+    applyReferal.addEventListener('click', function() {
+        var applyRefLink = document.getElementById('applyReferalLink');
+        var referalInput = document.getElementById('referalInput');
+        var refValue = referalInput.value;
+        var refStatus = fetchRef(refValue);
+        if(refStatus){
+            applyRefLink.style.color = 'rgb(0, 166, 255)';
+            applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
+            applyRefLink.removeAttribute('onclick');
+            setCookie('ref', refValue, 999999, false)
+        }else{
+            applyRefLink.style.color = 'tomato';
+            applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
+        }
+    });
+
 
     async function fetchRef(referalCode){
         await fetch(`/API/checkReferal?ref=${referalCode}`)
