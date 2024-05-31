@@ -35,7 +35,6 @@ class Login{
         return {loginStatus:true, log:"Logged In Successfully"}
     }
 
->>>>>>> ecf1e0b24ef363eb48eecdba6a58f493bd5279f5
 
 }
 
