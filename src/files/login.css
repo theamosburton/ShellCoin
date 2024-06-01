@@ -162,4 +162,11 @@ body{
     .viewArea{
         margin-top: 60px;
     }
+    .applyReferalLink{
+        font-size: large;
+    }
+
+    .agreement{
+        font-size: 16px;
+    }
 }
