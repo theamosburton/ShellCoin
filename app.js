@@ -12,6 +12,8 @@ const { checkReferal } = require('./API/referal');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
+
+
 app.use(session({
     secret: process.env.sessionSecret, // Replace with your own secret key
     resave: false,           // Prevents resaving session if unmodified
@@ -73,5 +75,6 @@ app.post('/auth/google', async (req, res) => {
 
 // Starting Server
 app.listen(port, () => {
+    
     console.log(`Server is running on http://localhost:${port}`);
 });

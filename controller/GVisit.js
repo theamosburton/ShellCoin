@@ -86,7 +86,7 @@ GuestVisit.createSession = async (guestID, req)=>{
     const conn = database.conn;
     const collection = conn.collection('Sessions');
     req.session.GSI = sessionID;
-    const guestIP = req.clientIp;
+    const guestIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const date = new Date().toISOString().split('T')[0];
     const visitedPage = req.originalUrl;
     const visitTime = Math.floor(Date.now() / 1000);
