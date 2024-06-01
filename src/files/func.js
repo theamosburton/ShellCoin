@@ -161,22 +161,22 @@ applyReferal.addEventListener('click', async function() {
     var refValue = referalInput.value;
     var refStatus = await fetchRef(refValue);
     var referer = document.getElementById('applyReferer');
-    // if(refStatus){
-    //     applyRefLink.style.color = 'rgb(0, 166, 255)';
-    //     applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
-    //     setCookie('ref', refValue, 999999, false);
-    //     referer.style.display = 'none';
-    //     applyReferal.innerHTML = 'Update';
-    //     referalInput.style.color = 'rgb(10, 151, 10)';
-    //     applyReferal.style.backgroundColor = 'slateblue';
-    // }else{
-    //     applyRefLink.style.color = 'tomato';
-    //     applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
-    //     applyReferal.innerHTML = 'Update';
-    //     referalInput.style.color = '#FF6347';
-    //     referer.style.display = 'flex';
-    //     applyReferal.style.backgroundColor = 'slateblue';
-    // }
+    if(refStatus){
+        applyRefLink.style.color = 'rgb(0, 166, 255)';
+        applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
+        setCookie('ref', refValue, 999999, false);
+        referer.style.display = 'none';
+        applyReferal.innerHTML = 'Update';
+        referalInput.style.color = 'rgb(10, 151, 10)';
+        applyReferal.style.backgroundColor = 'slateblue';
+    }else{
+        applyRefLink.style.color = 'tomato';
+        applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
+        applyReferal.innerHTML = 'Update';
+        referalInput.style.color = '#FF6347';
+        referer.style.display = 'flex';
+        applyReferal.style.backgroundColor = 'slateblue';
+    }
 });
 
 
