@@ -60,24 +60,36 @@ function onGoogleSignIn(response){
 }
 
 
-window.onload = function () {
+window.onload = async function () {
+
+    async function fetchRef(referalCode) {
+        const response = await fetch(`/API/checkReferal?ref=${referalCode}`);
+        const ref = await response.json();
+        return ref.referalStatus;
+    }
+
     var referer = document.getElementById('applyReferer');
     var applyRefLink = document.getElementById('applyReferalLink');
     var applyReferal = document.getElementById('applyReferal');
     var referalInput = document.getElementById('referalInput');
     var getCookie = getCookie('ref');
+    
     if (getCookie != null) {
         referer.style.display == 'none';
-        var refStatus = fetchRef(getCookie);
+        var refStatus = await fetchRef(getCookie);
         if(refStatus){
             applyRefLink.style.color = 'rgb(0, 166, 255)';
             applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${getCookie}</b></span>`;
             referalInput.value = getCookie;
             referer.style.display = 'none';
+            referalInput.style.color = 'rgb(10, 151, 10)';
         }else{
             applyRefLink.style.color = 'tomato';
             applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${getCookie}</b></span>`;
             applyReferal.innerHTML = 'Update';
+            referalInput.value = getCookie;
+            referalInput.style.color = '#FF6347';
+            referer.style.display = 'flex';
         }
         
     }else{
@@ -86,33 +98,6 @@ window.onload = function () {
         applyRefLink.style.color = 'rgb(0, 166, 255)';
     }
 
-}
-    applyReferal.addEventListener('click', function() {
-        var applyRefLink = document.getElementById('applyReferalLink');
-        var referalInput = document.getElementById('referalInput');
-        var applyReferal = document.getElementById('applyReferal');
-        var refValue = referalInput.value;
-        var refStatus = fetchRef(refValue);
-        var referer = document.getElementById('applyReferer');
-        if(refStatus){
-            applyRefLink.style.color = 'rgb(0, 166, 255)';
-            applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
-            setCookie('ref', refValue, 999999, false);
-            referer.style.display = 'none';
-            applyReferal.innerHTML = 'update';
-        }else{
-            applyRefLink.style.color = 'tomato';
-            applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
-        }
-    });
-
-
-    async function fetchRef(referalCode){
-        await fetch(`/API/checkReferal?ref=${referalCode}`)
-        .then(response => response.json())
-        .then(ref => {
-            return ref.referalStatus
-        });
     function getCookie(name) {
         const nameEQ = name + "=";
         const cookies = document.cookie.split(';');
@@ -125,15 +110,45 @@ window.onload = function () {
         return null;
     }
 
-    function setCookie(name, value, days, secure) {
-        const expires = new Date();
-        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-        let cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-        if (!secure) {
-            cookie += ';secure=false';
-        }
-        document.cookie = cookie;
+}
+applyReferal.addEventListener('click', async function() {
+    var applyRefLink = document.getElementById('applyReferalLink');
+    var referalInput = document.getElementById('referalInput');
+    var applyReferal = document.getElementById('applyReferal');
+    var refValue = referalInput.value;
+    var refStatus = await fetchRef(refValue);
+    var referer = document.getElementById('applyReferer');
+    if(refStatus){
+        applyRefLink.style.color = 'rgb(0, 166, 255)';
+        applyRefLink.innerHTML = `<span>Referal code applied</span> <span><b>${refValue}</b></span>`;
+        setCookie('ref', refValue, 999999, false);
+        referer.style.display = 'none';
+        applyReferal.innerHTML = 'update';
+        referalInput.style.color = 'rgb(10, 151, 10)';
+    }else{
+        applyRefLink.style.color = 'tomato';
+        applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
+        referalInput.style.color = '#FF6347';
+        referer.style.display = 'flex';
     }
+});
+
+async function fetchRef(referalCode) {
+    const response = await fetch(`/API/checkReferal?ref=${referalCode}`);
+    const ref = await response.json();
+    return ref.referalStatus;
+}
+
+
+
+function setCookie(name, value, days, secure) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    let cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    if (!secure) {
+        cookie += ';secure=false';
+    }
+    document.cookie = cookie;
 }
 
 
