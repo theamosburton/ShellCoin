@@ -157,6 +157,7 @@ applyReferal.addEventListener('click', async function() {
     var applyRefLink = document.getElementById('applyReferalLink');
     var referalInput = document.getElementById('referalInput');
     var applyReferal = document.getElementById('applyReferal');
+    applyReferal.style.backgroundColor = 'none';
     var refValue = referalInput.value;
     var refStatus = await fetchRef(refValue);
     var referer = document.getElementById('applyReferer');
@@ -167,12 +168,14 @@ applyReferal.addEventListener('click', async function() {
         referer.style.display = 'none';
         applyReferal.innerHTML = 'Update';
         referalInput.style.color = 'rgb(10, 151, 10)';
+        applyReferal.style.backgroundColor = 'slateblue';
     }else{
         applyRefLink.style.color = 'tomato';
         applyRefLink.innerHTML = `<span>Invalid referal code</span> <span><b>${refValue}</b></span>`;
         applyReferal.innerHTML = 'Update';
         referalInput.style.color = '#FF6347';
         referer.style.display = 'flex';
+        applyReferal.style.backgroundColor = 'slateblue';
     }
 });
 
