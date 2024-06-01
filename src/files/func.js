@@ -153,7 +153,7 @@ window.onload = async function () {
 
 }
 applyReferal.addEventListener('click', async function() {
-    createDotsAnimation('applyReferal', 3, 300);
+    createDotsAnimation('applyReferal', 5, 300);
     var applyRefLink = document.getElementById('applyReferalLink');
     var referalInput = document.getElementById('referalInput');
     var applyReferal = document.getElementById('applyReferal');
