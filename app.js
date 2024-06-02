@@ -4,14 +4,15 @@ const cookieParser = require('cookie-parser');
 const cookieOnly = require('cookie');
 const path = require('path');
 require('dotenv').config();
-const authGithub = require('./API/githubAuth');
-const {Login} = require('./controller/login');
+const {authGithub} = require('./API/githubAuth');
+const {SSOLogin} = require('./controller/login');
 const {Visit} = require('./controller/Visit');
 const { Database } = require('./controller/db');
 const { checkReferal } = require('./API/referal');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
+
 
 
 app.use(session({
@@ -41,12 +42,21 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 app.get('/account', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'account.html'));
+    if (SSOLogin.authenticateLogin(req).status) {
+        res.sendFile(path.join(__dirname, 'public', 'account.html'));
+    }else{
+        res.redirect('/login');
+    }
+    
 });
 
 app.get('/login', (req, res) => {
-    // Login.preLogin(req, res);
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    if (SSOLogin.authenticateLogin(req).status) {
+        res.redirect('/account');
+    }else{
+        res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    }
+    
 });
 
 app.get('/API/js', (req, res) => {
@@ -65,11 +75,25 @@ app.get('/API/checkReferal', (req, res) => {
 
 app.get('/auth/github', async (req, res) => {
     const userInfo = await authGithub(req, process.env.gt_client, process.env.gt_secret);
-    res.json(userInfo);
+    userInfo.authType = 'Github';
+    const isLogged = await SSOLogin.Login(req, res, userInfo);
+    if (isLogged.status) {
+        res.redirect('/account');
+    }else{
+        res.redirect('/login');
+    }
 });
 
 app.post('/auth/google', async (req, res) => {
     const userInfo = req.body;
+    userInfo.authType = 'Google';
+    delete userInfo.username;
+    const isLogged = await SSOLogin.Login(req, res, userInfo);
+    if (isLogged.status) {
+        res.json({status:true, log:"Logged sucessfully"});
+    }else{
+        res.json({status:false, log:isLogged.log});
+    }
 });
 
 

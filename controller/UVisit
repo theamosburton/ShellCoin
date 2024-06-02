@@ -18,8 +18,6 @@ UserVisit.initialize = async (req, res) => {
         } else {
             await UserVisit.createSession(userID, req);
         }
-    } else {
-        await GuestVisit.initialize(req, res);
     }
 }
 
@@ -40,41 +38,6 @@ UserVisit.checkCookie = async (req)=>{
   await Database.disconnect();
 }
 
-UserVisit.addNewGuest = async (req, res)=>{
-    var userID = await functions.createNewID("Users", "U", 'uID');
-    if (!userID.status) {
-      return false;
-    }
-    const database = await Database.connect();
-    if(database.status){
-      const conn = database.conn;
-      const collection = conn.collection('Users');
-      const httpReferer = req.headers['referer'] || '';
-      userID = userID.log;
-      const dateTime = Date.now();
-      const date = new Date().toISOString().split('T')[0];
-      const encryptedID = functions.encrypt(userID);
-      const setCookieHeader = cookieOnly.serialize('UID', encryptedID, {
-        path: '/',
-        httpOnly: true,
-        maxAge: 3600 * 24 * 30 * 365 // Cookie will expire in 1 years
-      });
-      const referedByPerson = req.query.ref || '';
-      res.setHeader('Set-Cookie', setCookieHeader);
-      const userData = {
-        date: date,
-        uID: userID,
-        rfPrsn:referedByPerson,
-        httpRef: httpReferer
-      };
-      const result = await collection.insertOne(userData);
-      if (result.acknowledged) {
-        await UserVisit.createSession(userID, req)
-      }
-    }
-    await Database.disconnect();
-}
-
 UserVisit.createSession = async (userID, req)=>{
   var sessionID = await functions.createNewID("Sessions", "US", 'sID');
   if (!sessionID.status) {
@@ -85,7 +48,7 @@ UserVisit.createSession = async (userID, req)=>{
   if(database.status){
     const conn = database.conn;
     const collection = conn.collection('Sessions');
-    req.session.GSI = sessionID;
+    req.session.USI = sessionID;
     const guestIP = req.clientIp;
     const date = new Date().toISOString().split('T')[0];
     const visitedPage = req.originalUrl;

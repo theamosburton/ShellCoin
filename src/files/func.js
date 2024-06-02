@@ -1,5 +1,3 @@
-
-
 function toggleMenus() {
     var showMenus = document.getElementById('expandMenusIcon');
     var hideMenus = document.getElementById('hideMenusIcon');
@@ -44,7 +42,6 @@ function onGoogleSignIn(response){
             const logUrl = '/auth/google';
             var encyDat = {
                 'name' : `${res.name}`,
-                'username':'',
                 'profilePic': `${res.picture}`,
                 'email': `${res.email}`
             };
@@ -56,6 +53,7 @@ function onGoogleSignIn(response){
                 body: JSON.stringify(encyDat)
               });
             var isLogged = await response.json();
+            console.log(isLogged);
         }
 }
 
@@ -101,7 +99,7 @@ window.onload = async function () {
         setInterval(animateDots, interval);
     }
     
-    createDotsAnimation('applyReferalLink', 7, 200);
+    createDotsAnimation('applyReferalLink', 7, 100);
     applyRefLink.style.flexDirection = 'row';
 
     async function fetchRef(referalCode) {
@@ -152,8 +150,9 @@ window.onload = async function () {
     }
 
 }
+
 applyReferal.addEventListener('click', async function() {
-    createDotsAnimation('applyReferal', 5, 300);
+    createDotsAnimation('applyReferal', 7, 100);
     var applyRefLink = document.getElementById('applyReferalLink');
     var referalInput = document.getElementById('referalInput');
     var applyReferal = document.getElementById('applyReferal');
@@ -178,8 +177,6 @@ applyReferal.addEventListener('click', async function() {
         applyReferal.style.backgroundColor = 'slateblue';
     }
 });
-
-
 
 function createDotsAnimation(containerId, maxDots, interval) {
     const dotContainer = document.getElementById(containerId);
@@ -215,13 +212,11 @@ function createDotsAnimation(containerId, maxDots, interval) {
     setInterval(animateDots, interval);
 }
 
-
 async function fetchRef(referalCode) {
     const response = await fetch(`/API/checkReferal?ref=${referalCode}`);
     const ref = await response.json();
     return ref.referalStatus;
 }
-
 
 
 function setCookie(name, value, days, secure) {
@@ -233,7 +228,6 @@ function setCookie(name, value, days, secure) {
     }
     document.cookie = cookie;
 }
-
 
 function toggleReferal(){
     var referer = document.getElementById('applyReferer');

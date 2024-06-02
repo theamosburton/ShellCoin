@@ -35,6 +35,10 @@ async function authGithub(req, clientID, clientSecret){
         email: userResponseEmail.data[0].email
     }
 
+    if (req.cookies.ref && req.cookies.ref.length === 8) {
+        usefulData.referer = req.cookies.ref;
+    }
+
     return usefulData;
 }
 
