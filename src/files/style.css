@@ -212,10 +212,10 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     flex-direction: column;
 }
 .tokenStatSection .statTitle{
-    margin-bottom: 15px;
+    margin: 20px 0px;
 }
 .tokenStatSection .mainTitle{
-    font-size: 50px;
+    font-size: 30px;
     font-family: Geometric;
     color: white;
     width: auto;
@@ -224,11 +224,12 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
 }
 
 .tokenStatSection .statSection{
-    margin: 0px 50px 30px 50px;
+    margin: 10px 50px 30px 50px;
     display: flex;
     flex-direction: row;
-    background-color: #9e239e;
+    /* background-color: #9e239e; */
     border-radius: 20px;
+    max-width: 1000px;
 }
 
 .tokenStatSection .statSection .leftStatSection, .tokenStatSection .statSection .rightStatSection{
@@ -506,8 +507,16 @@ background-color: rgb(14 14 40);
 }
 .menusSectionFull .menus{
     font-size: 20px;
+    margin-top: 20px;
 }
 
+.menusSectionFull .menus span{
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding: 10px 30px;
+}
 .menusSectionFull .buyMenu{
     margin-left: 25px;
     margin-top: 10px;
@@ -557,6 +566,59 @@ background-color: rgb(14 14 40);
     margin: 45px 0px 30px 0px;
     height: 5px;
     border-radius: 5px;
+}
+.profileButton{
+    display: flex;
+    padding: 5px 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profileButton .imgDiv{
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 2px solid grey;
+    margin-right: 5px;
+}
+
+.profileButton .imgDiv .profileImage{
+    width: 20px;
+    height: 20px;
+    border-radius: 30px;
+
+}
+.profileButton .dropdownImage{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ed5aed;
+}
+
+.profileButton .nameDiv{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+
+}
+
+.profileButton .nameDiv:hover{
+    color:#ed5aed;
 }
 @media screen and (max-width: 851px) {
     .howSection .shader{

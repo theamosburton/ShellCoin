@@ -2,8 +2,9 @@ const { Database } = require("./db");
 let crypto = require('node:crypto');
 var functions = {};
 functions.INCREMENT = 0;
-functions.authKey = process.env.authSecret;
-functions.iv = crypto.randomBytes(16);
+functions.ivLength = 16;
+
+
 functions.createNewID = async (collectionName, prefix, uniqueProp) => {
     const database = await Database.connect();
     if(database.status){
@@ -67,20 +68,25 @@ functions.createNewID = async (collectionName, prefix, uniqueProp) => {
 }
 
 
+
 functions.encrypt = (text) => {
-    const cipher = crypto.createCipheriv('aes-256-cbc', functions.authKey, functions.iv);
+    const authKey = Buffer.from(process.env.authSecret, 'hex');
+    const iv = crypto.randomBytes(functions.ivLength);
+    const cipher = crypto.createCipheriv('aes-256-cbc',authKey, iv);
     let encrypted = cipher.update(text, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-    return encrypted;
-}
+    return iv.toString('hex') + ':' + encrypted;
+};
 
-// Decryption function
 functions.decrypt = (encryptedText) => {
-    const decipher = crypto.createDecipheriv('aes-256-cbc', functions.authKey, functions.iv);
-    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    const authKey = Buffer.from(process.env.authSecret, 'hex');
+    const [ivHex, encrypted] = encryptedText.split(':');
+    const iv = Buffer.from(ivHex, 'hex');
+    const decipher = crypto.createDecipheriv('aes-256-cbc', authKey, iv);
+    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
-}
+};
 
 functions.randomString = () => {
     const randomBytes = crypto.randomBytes(8); // 8 bytes = 64 bits

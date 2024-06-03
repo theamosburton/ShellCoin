@@ -9,11 +9,12 @@ const {SSOLogin} = require('./controller/login');
 const {Visit} = require('./controller/Visit');
 const { Database } = require('./controller/db');
 const { checkReferal } = require('./API/referal');
+const { loadViews } = require('./controller/makeViews');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
-
-
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
     secret: process.env.sessionSecret, // Replace with your own secret key
@@ -22,6 +23,16 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 const commonFunctions = async (req, res, next) => {
+    app.post('/API/logout', async (req, res) =>{
+        const authLogin = await SSOLogin.authenticateLogin(req);
+        if (authLogin.status) {
+            res.clearCookie('UID');
+            res.json({status:true, log:"Logged out successfully"});
+        }else{
+            res.json({status:true, log:"Logged out successfully"});
+        }
+        return next();
+    });
     await Visit.initialize(req, res);
     next();
 };
@@ -30,34 +41,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.urlencoded());
 app.use(express.json());
-
 app.use(commonFunctions);
 
-
-
-
-
 // Routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'home.html'));
+app.get('/', async (req, res) => {
+    var data = await loadViews.dashboard(req);
+    res.render('home', {data});
 });
-app.get('/account', (req, res) => {
-    if (SSOLogin.authenticateLogin(req).status) {
-        res.sendFile(path.join(__dirname, 'public', 'account.html'));
+app.get('/account', async (req, res) => {
+    const authLogin = await SSOLogin.authenticateLogin(req);
+    var data = await loadViews.dashboard(req);
+    if (authLogin.status){
+        res.render('account', {data});
     }else{
         res.redirect('/login');
     }
     
 });
 
-app.get('/login', (req, res) => {
-    if (SSOLogin.authenticateLogin(req).status) {
+app.get('/login', async (req, res) => {
+    const authLogin = await SSOLogin.authenticateLogin(req);
+    if (authLogin.status){
         res.redirect('/account');
     }else{
-        res.sendFile(path.join(__dirname, 'public', 'login.html'));
+        res.render('login');
     }
-    
 });
+
+
 
 app.get('/API/js', (req, res) => {
     res.json({

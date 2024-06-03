@@ -3,16 +3,6 @@ function handleCredentialResponse(response) {
     // You can send this token to your server for further processing
 }
 
-window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
-        callback: handleCredentialResponse
-    });
-    document.getElementById('loginButton').addEventListener('click', function () {
-        google.accounts.id.prompt();
-    });
-};
-
 function toggleMenus(){
     var showMenus = document.getElementById('expandMenusIcon');
     var hideMenus = document.getElementById('hideMenusIcon');
@@ -27,4 +17,24 @@ function toggleMenus(){
         showMenus.style.display = 'flex';
     }
 }
+
+function logout(){
+    logoutNow();
+        async function logoutNow(){
+            const logUrl = '/API/logout';
+            var encyDat = {};
+            const response = await fetch(logUrl, {
+                method: 'post',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(encyDat)
+              });
+            var isLogged = await response.json();
+            if (isLogged.status) {
+                window.location.href = '/';
+            }
+        }
+}
+
 

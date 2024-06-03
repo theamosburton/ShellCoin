@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="files/style.css?v=2.0.1">
+    <link rel="stylesheet" href="files/style.css?v=2.0.2">
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
     <link href="assets/css/fontawesome6.3.0.css" rel="stylesheet">
     <link href="assets/fontawesome/css/brands.min.css" rel="stylesheet">
@@ -22,11 +22,17 @@
                     
                 </div>
                 <div class="menusSection">
-                    
                     <div class="menus homeMenu"> <a class="link" href="">Home</a> </div>
                     <div class="menus aboutMenu"><a class="link" href="">About</a></div>
                     <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
-                    <div class="menus loginMenu"> <span class="link" id="loginButton">Log In</span> </div>
+                    <%- data.webLogin %>
+                    <!-- <div class="menus loginMenu profileButton" id="loginButton">
+                        <div class="imgDiv">
+                            <img class="profileImage" src="/images/logo.png" alt="">
+                        </div>
+                        <div class="nameDiv">Mohd Shafiq Malik</div>
+                    </div> -->
+                    <!-- <div class="menus loginMenu link" id="loginButton"><a class="link" href="/login">Log In</a></div> -->
                 </div>
                 <div class="expandMenus" id="expandMenusIcon" onclick="toggleMenus()">
                     <i class="fa-solid fa-bars fa-2x"></i>
@@ -37,8 +43,8 @@
                     </div>
                     <div class="menus homeMenu"> <a class="link" href="">Home</a> </div>
                     <div class="menus aboutMenu"><a class="link" href="">About</a></div>
-                    <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
-                    <div class="menus loginMenu link" id="loginButton">Log In</div>
+                    <div class="menus contactMenu"><a class="link" href="">Help</a></div>
+                    <%- data.mobMenus %>
                 </div>
             </div>
             <!-- Action Section -->

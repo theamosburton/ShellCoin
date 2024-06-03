@@ -22,10 +22,10 @@
                     
                 </div>
                 <div class="menusSection">
-                    <div class="menus homeMenu"> <a class="link" href="/">Dashboard</a> </div>
+                    <div class="menus homeMenu"> <a class="link" href="/">Home</a> </div>
                     <div class="menus aboutMenu"><a class="link" href="">About</a></div>
-                    <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
-                    <div class="menus loginMenu"><a class="link" href="">Log Out</a></div>
+                    <div class="menus contactMenu"><a class="link" href="">Contact</a></div>
+                    <%- data.webLogin %>
                 </div>
                 <div class="expandMenus" id="expandMenusIcon" onclick="toggleMenus()">
                     <i class="fa-solid fa-bars fa-2x"></i>
@@ -34,14 +34,13 @@
                     <div class="closeMenus" id="hideMenusIcon" style="display: none;" onclick="toggleMenus()">
                         <i class="fa-solid fa-xmark 3x" ></i>
                     </div>
-                    <div class="menus homeMenu"> <a class="link" href="/">Dashboard</a> </div>
+                    <div class="menus homeMenu"> <a class="link" href="/">Home</a> </div>
                     <div class="menus aboutMenu"><a class="link" href="">About</a></div>
-                    <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
-                    <div class="menus loginMenu"><a class="link" href="">Log Out</a></div>
+                    <div class="menus contactMenu"><a class="link" href="">Help</a></div>
+                    <%- data.mobMenus %>
                 </div>
             </div>
                         <!-- Stat Section -->
-                        <hr class="thirdLine">
                         <!-- <div class="v-spacer-tk"></div> -->
                         <div class="tokenStatSection">
                             <div class="statTitle">

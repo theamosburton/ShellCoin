@@ -102,6 +102,10 @@ SSOLogin.checkUserExists = async (userInfo)=>{
 
 SSOLogin.authenticateLogin = async (req)  => {
     let returnData;
+    if (!req.cookies.UID) {
+        returnData = {status:false, log:'No login found', conn:true};
+        return returnData;
+    }
     var cookie = req.cookies.UID;
     cookie = functions.decrypt(cookie);
     const database = await Database.connect();
@@ -117,7 +121,7 @@ SSOLogin.authenticateLogin = async (req)  => {
     }else{
         returnData = {status:true, log:'Database connection Error', conn:false};
     }
-    console.log(cookie);
+    await Database.disconnect();
     return returnData;
 }
 

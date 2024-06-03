@@ -49,7 +49,7 @@ UserVisit.createSession = async (userID, req)=>{
     const conn = database.conn;
     const collection = conn.collection('Sessions');
     req.session.USI = sessionID;
-    const guestIP = req.clientIp;
+    const guestIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const date = new Date().toISOString().split('T')[0];
     const visitedPage = req.originalUrl;
     const visitTime = Math.floor(Date.now() / 1000);
@@ -74,25 +74,30 @@ UserVisit.updateVisits = async (sessionID, req)=> {
     return false;
   }
   const database = await Database.connect();
-  if(database.status){
-    const conn = database.conn;
-    const collection = conn.collection('Sessions');
-    const visitTime = Math.floor(Date.now() / 1000);
-    const visitedPage = req.originalUrl;
-    const fetchData = await collection.findOne({sID: sessionID})
-    var newVisitCount = fetchData.vCont + 1;
-    await collection.updateOne(
-      { sID: sessionID },
-      {
-          $set: { vCont: newVisitCount },
-          $push: { 
-            vPge: visitedPage,
-            vTme: visitTime 
-          }
-      }
-  );
+  try {
+    const database = await Database.connect();
+    if (database.status) {
+        const conn = database.conn;
+        const collection = conn.collection('Sessions');
+        const visitTime = Math.floor(Date.now() / 1000);
+        const fetchData = await collection.findOne({ sID: sessionID });
+        if (fetchData) {
+            const newVisitCount = fetchData.vCont + 1;
+            await collection.updateOne(
+                { sID: sessionID },
+                {
+                    $set: { vCont: newVisitCount },
+                    $push: {
+                        vPge: visitedPage,
+                        vTme: visitTime
+                    }
+                }
+            );
+        }
+    }
+  }finally {
+    await Database.disconnect();
   }
-  await Database.disconnect();
 }
   
 UserVisit.existInDB = async (uID)=> {
