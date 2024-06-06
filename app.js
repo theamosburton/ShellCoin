@@ -109,7 +109,7 @@ app.post('/auth/google', async (req, res) => {
 
 
 // Starting Server
-app.listen(port, '192.168.140.172', () => {
+app.listen(port, () => {
     
     console.log(`Server is running on http://localhost:${port}`);
 });
