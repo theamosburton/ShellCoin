@@ -39,7 +39,7 @@ const commonFunctions = async (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
 app.use(express.json());
 app.use(commonFunctions);
 
