@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="files/style.css?v=2.0.2">
+    <link rel="stylesheet" href="files/style.css?v=2.0.3">
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
     <link href="assets/css/fontawesome6.3.0.css" rel="stylesheet">
     <link href="assets/fontawesome/css/brands.min.css" rel="stylesheet">
@@ -14,6 +14,8 @@
 <body>
     <div class="topViewBox">
         <div class="viewArea">
+            
+            
             <div class="headerSection">
                 <div class="logoSection">
                     <img src="images/logo-round.png" alt="O" class="logo">
@@ -21,31 +23,10 @@
                     <p> (Presale)</p>
                     
                 </div>
-                <div class="menusSection">
-                    <div class="menus homeMenu"> <a class="link" href="">Home</a> </div>
-                    <div class="menus aboutMenu"><a class="link" href="">About</a></div>
-                    <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
-                    <%- data.webLogin %>
-                    <!-- <div class="menus loginMenu profileButton" id="loginButton">
-                        <div class="imgDiv">
-                            <img class="profileImage" src="/images/logo.png" alt="">
-                        </div>
-                        <div class="nameDiv">Mohd Shafiq Malik</div>
-                    </div> -->
-                    <!-- <div class="menus loginMenu link" id="loginButton"><a class="link" href="/login">Log In</a></div> -->
-                </div>
-                <div class="expandMenus" id="expandMenusIcon" onclick="toggleMenus()">
-                    <i class="fa-solid fa-bars fa-2x"></i>
-                </div>
-                <div class="menusSectionFull" style="display: none;" id="hiddenMenus">
-                    <div class="closeMenus" id="hideMenusIcon" style="display: none;" onclick="toggleMenus()">
-                        <i class="fa-solid fa-xmark 3x" ></i>
-                    </div>
-                    <div class="menus homeMenu"> <a class="link" href="">Home</a> </div>
-                    <div class="menus aboutMenu"><a class="link" href="">About</a></div>
-                    <div class="menus contactMenu"><a class="link" href="">Help</a></div>
-                    <%- data.mobMenus %>
-                </div>
+
+                <%- data.WebTop %>
+                <%- data.MobTop %>
+
             </div>
             <!-- Action Section -->
             <div class="actionSection">
@@ -58,13 +39,14 @@
                     <hr class="firstLine">
                     <div class="tokenAction">
                         <div class="leftAction">
-                            <span><a href="#">Buy Now</a></span>
+                            <%- data.buyLink%>
                         </div>
                         <div class="rightAction">
                             <span> <a href="#howSectionLine">How to Buy</a></span>
                         </div>
                     </div>
                 </div>
+                <%- data.Dp %>
             </div>
             <!-- action section -->
             
@@ -192,69 +174,72 @@
 
                     </div>
                 </div>
-                <!-- stat section -->
-                <hr class="secondLine">
-                <!-- About Section -->
-                <div class="aboutTokenSection">
-                    <div class="aboutTitle">What is ShellCoin?</div>
-                    <div class="aboutSection">
-                        <div class="shader">
-                            <div class="aboutLeftSection">
-                                <ul>
-                                    <li>ShellCoin (SLCN) is token created on Solana Blockchain technology. The token is created under Token-2022 solana program.</li>
-                                    <li>It uses consensus mechanism Proof of Stake (PoS). This protocol confirm transactions and create new block through randomly selected validators.</li>
-                                    <li>Only <b style="color: #fe9400;">10 billion ShellCoin</b> tokens have been minted to preserve their exclusivity; each token represents a finite piece of digital value, ensuring rarity and enduring value for holders.</li>
-                                    <li>ShellCoin complies with relevant regulations and legal requirements, ensuring a transparent and compliant token sale process.</li>
-                                    <li> <b>Purpose</b> : ShellCoin aims to become the primary medium of exchange and governance token within the Solana ecosystem. With a clear intention, strong tokenomics, and a pious objective, ShellCoin is poised to drive innovation and growth in the decentralized finance (DeFi) space on Solana.</li>
-                                </ul>
-                            </div>
-                            <div class="aboutRightSection">
-                                <div class="rightSectionBox">
-                                    <img src="images/graphs.png" alt="">
-                                    <span class="allocation">ShellCoin Allocation</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <!-- about section -->
-                <hr class="secondLine" id="howSectionLine">
-                <!-- How to section -->
-                <div class="howToSection">
-                    <div class="howToTitle">How to buy ShellCoin?</div>
-                    <div class="howSection">
-                        <div class="shader">
-                            <div class="leftHowSection">
-                                <ul>
-                                    <li>Create Account: The very first step is create an account on ShellCoin Official Platform. </li>
-                                    <li>Verify your email address: You need to verify your email address in order to buy tokens.</li>
-                                    <li>Pay with card: Use your debit/credit/ATM card to purchase ShellCoin. The minimum purchase? Just $10. But <b style="color: #ff661a;">hurry, only 7 million</b> pioneers will seize this exclusive opportunity.</li>
-    
-                                    <li>Create Solana wallet: Create a solana wallet on phantom wallet. If you don't have you can create a phantom wallet both on mobile and desktop. You can use other solana wallet but phantom is recommanded as it support the icon and transfer of your ShellCoins.</li>
-                                    <li>Add Your Solana address: Copy your solana wallet address from phantom and paste it in the box given in your account section. This is the account address where we will send you solana tokens.</li>
-                                    <li>Once the ShellCoin is launched we will airdrop your ShellCoins to your solana wallet.</li>
-                                </ul>
-                            </div>
-                            <div class="rightHowSection">
-                                <img src="images/pay-card.png" alt="">
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <!-- how to section -->
-                <hr class="secondLine">
 
-                <!-- Footer Section -->
-                <div class="footer">
+            </div>
+            <!-- stat section -->
+            <hr class="secondLine">
+            <!-- About Section -->
+            <div class="aboutTokenSection">
+                <div class="aboutTitle">What is ShellCoin?</div>
+                <div class="aboutSection">
+                    <div class="shader">
+                        <div class="aboutLeftSection">
+                            <ul>
+                                <li> <span class="steps">ShellCoin: </span> ShellCoin (SLCN) is token created on Solana Blockchain technology. The token is created under Token-2022 solana program.</li>
+                                <li> <span class="steps">Mechanism: </span> It uses consensus mechanism Proof of Stake (PoS). This protocol confirm transactions and create new block through randomly selected validators.</li>
+                                <li> <span class="steps">Exclusive: </span> Only <b style="color: #fe9400;">10 billion ShellCoin</b> tokens have been minted to preserve their exclusivity; each token represents a finite piece of digital value, ensuring rarity and enduring value for holders.</li>
+                                <li> <span class="steps">Legal:</span> ShellCoin complies with relevant regulations and legal requirements, ensuring a transparent and compliant token sale process.</li>
+                                <li> <span class="steps">Purpose:</span> ShellCoin aims to become the primary medium of exchange and governance token within the Solana ecosystem. With a clear intention, strong tokenomics, and a pious objective, ShellCoin is poised to drive innovation and growth in the decentralized finance (DeFi) space on Solana.</li>
+                            </ul>
+                        </div>
+                        <div class="aboutRightSection">
+                            <div class="rightSectionBox">
+                                <img src="images/graphs.png" alt="">
+                                <span class="allocation">ShellCoin Allocation</span>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
-                <!-- footer section -->
             </div>
+            <!-- about section -->
+            <hr class="secondLine" id="howSectionLine">
+            <!-- How to section -->
+            <div class="howToSection">
+                <div class="howToTitle">How to buy ShellCoin?</div>
+                <div class="howSection">
+                    <div class="shader">
+                        <div class="leftHowSection">
+                            <ul>
+                                <li> <span class="steps">Create Account:</span>  The very first step is create an account on ShellCoin Official Platform. </li>
+                                <li> <span class="steps">Sign Up Options:</span> You have to select provided option to create account and login into your account. We recommand using google sign in method.</li>
+                                <li><span class="steps">Apply referal:</span>  If someone sends the link it may contain referal code. If referal code is not applied you can put your own referal by tapping on the link.</li>
+                                <li><span class="steps">Buy with card:</span>  Use your debit/credit/ATM card to purchase ShellCoin. The minimum purchase? Just $10. But <b style="color: orangered;">hurry, only 7 million</b> pioneers will seize this exclusive opportunity.</li>
+                                <li><span class="steps">Buy with crypto:</span>  You can purchase ShellCoin by sending your perfered crypto. Major cryptos like Solana, Bitcoin and Ethereum are supported.</li>
+
+                                <li><span class="steps">Create Solana wallet:</span>  Create a solana wallet on phantom wallet. If you don't have you can create a phantom wallet both on mobile and desktop. You can use other solana wallet but phantom is recommanded as it support the icon and transfer of your ShellCoins.</li>
+                                <li><span class="steps">Add Your Solana address:</span>  Copy your solana wallet address from phantom and paste it in the box given in your account section. This is the account address where we will send you solana tokens.</li>
+                                <li><span class="steps">Airdropping: </span> Once the ShellCoin is launched we will airdrop your ShellCoins to your solana wallet.</li>
+                            </ul>
+                        </div>
+                        <div class="rightHowSection">
+                            <img src="images/pay-card.png" alt="">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- how to section -->
+            <hr class="secondLine">
+
+            <!-- Footer Section -->
+            <div class="footer">
+                
+            </div>
+            <!-- footer section -->
         </div>
     </div>
     
-    <script src="files/func.js?v=1.0.2"></script>
+    <script src="files/func.js?v=1.0.3"></script>
 </body>
 </html>

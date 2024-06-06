@@ -1,24 +1,3 @@
-function toggleMenus() {
-    var showMenus = document.getElementById('expandMenusIcon');
-    var hideMenus = document.getElementById('hideMenusIcon');
-    var hiddenMenus = document.getElementById('hiddenMenus');
-    if (hideMenus.style.display == 'none') {
-        hideMenus.style.display = 'flex';
-        hiddenMenus.style.display = 'flex';
-        showMenus.style.display = 'none';
-    } else {
-        hideMenus.style.display = 'none';
-        hiddenMenus.style.display = 'none';
-        showMenus.style.display = 'flex';
-    }
-}
-
-
-
-
-
-
-
 function createDotsAnimation(containerId, maxDots, interval) {
     const dotContainer = document.getElementById(containerId);
     dotContainer.innerHTML = '';
@@ -59,7 +38,6 @@ async function fetchRef(referalCode) {
     return ref.referalStatus;
 }
 
-
 function setCookie(name, value, days, secure) {
     const expires = new Date();
     expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -79,11 +57,40 @@ function toggleReferal(){
     }
 }
 
-
 function goToAccount(){
     window.location.href = '/account';
 }
 
+function goto(loc) {
+    window.location.href = loc;
+}
+function hideDropdown(id) {
+    var dropdown = document.getElementById(id);
+    if (dropdown) {
+        dropdown.style.display = 'none';
+    } else {
+        console.error('Element with id "' + id + '" not found.');
+    }
+}
+
+function toggle(id){
+    var element = document.getElementById(id);
+    if (element.style.display == 'flex') {
+        if (dropdown = document.querySelectorAll('.dropdownIcon')) {
+            dropdown.forEach((dropdowns) => {
+                dropdowns.innerHTML = '<i class="fa fa-caret-right"></i>';
+            });
+        }
+        element.style.display = 'none';
+    } else {
+        element.style.display = 'flex';
+        if (dropdown = document.querySelectorAll('.dropdownIcon')) {
+            dropdown.forEach((dropdowns) => {
+                dropdowns.innerHTML = '<i class="fa fa-caret-down"></i>';
+            });
+        }
+    }
+}
 function logout(){
     logoutNow();
         async function logoutNow(){
@@ -102,3 +109,5 @@ function logout(){
             }
         }
 }
+
+

@@ -88,6 +88,19 @@ functions.decrypt = (encryptedText) => {
     return decrypted;
 };
 
+functions.maskEmail = (email) => {
+    let [local, domain] = email.split('@');
+    let maskedLocal;
+    if (local.length <= 2) {
+      maskedLocal = local[0] + '*';
+    } else if (local.length === 3) {
+      maskedLocal = local[0] + '*' + local[2];
+    } else {
+      maskedLocal = local[0] + '*'.repeat(local.length - 2) + local[local.length - 1];
+    }
+    return `${maskedLocal}@${domain}`;
+  }
+
 functions.randomString = () => {
     const randomBytes = crypto.randomBytes(8); // 8 bytes = 64 bits
     return randomBytes.toString('base64'); // convert to Base64 string

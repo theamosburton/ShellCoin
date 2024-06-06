@@ -8,23 +8,226 @@ loadViews.dashboard = async (req)=>{
     if (isLogged.status) {
         var name = isLogged.log.name;
         var profilePic = isLogged.log.profilePic;
+        var email = isLogged.log.email;
         data = {
-            webLogin: `<div class="menus loginMenu profileButton" onclick="goToAccount()" id="loginButton">
-                        <div class="imgDiv">
-                            <img class="profileImage" src="${profilePic}" alt="">
+            WebTop: ` <div class="menusSection" id="lWebTop">
+                        <div class="menus homeMenu" > <a class="link" style="color: aqua;">Dashboard</a> </div>
+                        <div class="menus aboutMenu"><a class="link" href="">About Us</a></div>
+                        <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('logDpMob')">
+                            <div class="imgDiv">
+                                <img class="profileImage" src="${profilePic}" alt="">
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
                         </div>
-                        <div class="nameDiv" >${name}</div>
                     </div>`,
-            mobMenus:`<div class="menus loginMenu link" onclick="goToAccount()" id="loginButton"><a class="link" href="/account">My Account</a></div> 
-            <div class="menus loginMenu link" onclick="logout()" id="loginButton"><a class="link" href="/API/logout">Logout</a></div>`,
-            mobImage:``
+
+
+            MobTop: `<div class="menusSection" id="lMobTop">
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('logDpMob')">
+                            <div class="imgDiv">
+                                <img class="profileImage" src="${profilePic}" alt="">
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
+                        </div>
+                    </div>`,
+
+            Dp:`<div class="dropdownContainer" id="logDpMob" style="display:none;" onclick="hideDropdown('logDpMob')">
+                    <div class="dropdownDiv" id="dropdownDiv" style="">
+                        <div class="dropDownProfile">
+                            <div class="profilePic">
+                                <div class="profileImg">
+                                    <img src="${profilePic}" alt="">
+                                </div>
+                            </div>
+                            <div class="userInfo">
+                                <p class="userInformation">${name}</p>
+                                <p class="userInformation">${email}</p>
+                            </div>
+                        </div>
+
+                        <div class="otherOptions" onclick="goto('/account')">
+                            <i class="fa fa-coins"></i>
+                            <span>Account</span>
+                        </div>
+
+                        <div class="otherOptions">
+                            <i class="fa fa-info-circle"></i>
+                            <span>About</span>
+                        </div>
+                        <div class="otherOptions">
+                            <i class="fa fa-comment"></i>
+                            <span>Help</span>
+                        </div>
+                        <div class="logoutLink" onclick="logout()">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                            
+                        </div>
+                    </div>
+                </div>`,
+            buyLink: `<span><a href="/account/#waysToBuy">Buy Now</a></span>`
         };
     }else{
         data = {
-            webLogin: `<div class="menus loginMenu link" id="loginButton"><a class="link" href="/login">Log In</a></div>`,
-            mobImage:``,
-            mobMenus:`<div class="menus loginMenu link" id="loginButton"><a class="link" href="/login">Log In</a></div>`
+            WebTop: `<div class="menusSection" id="nLogWebTop">
+                        <div class="menus homeMenu"> <a class="link" href="/">Dashboard</a> </div>
+                        <div class="menus aboutMenu"><a class="link" href="">About Us</a></div>
+                        <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
+                        <div class="menus loginMenu profileButton profileButtonWithoutBorder" id="loginButton" onclick="goto('/login')">
+                            <div class="imgDiv">
+                                <i class="profileImage fa fa-user"></i>
+                            </div>
+                        </div>
+                    </div>`,
+
+            MobTop: `<div class="menusSection" id="nLogMobTop"> 
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('nLogDpMob')">
+                            <div class="imgDiv">
+                                <i class="profileImage fa fa-user"></i>
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
+                        </div>
+                    </div>`,
+
+            Dp:`<div class="dropdownContainer" id="nLogDpMob" style="display:none;" onclick="hideDropdown('nLogDpMob')">
+                    <div class="dropdownDiv" id="dropdownDiv">
+                        <div class="otherOptions firstOption" style="color:aqua;">
+                            <i class="fa fa-home"></i>
+                            <span>Home</span>
+                        </div>
+
+                        <div class="otherOptions">
+                            <i class="fa fa-info-circle"></i>
+                            <span>About Us</span>
+                        </div>
+                        <div class="otherOptions">
+                            <i class="fa fa-comment"></i>
+                            <span>Contact Us</span>
+                        </div>
+                        <div class="logoutLink" onclick="goto('/login')">
+                            <i class="fa fa-sign-in"></i>
+                            <span>Login/Sign Up</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            `,
+            buyLink: `<span><a href="/login">Login to Buy</a></span>`
+            };
+    }
+    return data;
+}
+
+
+loadViews.account = async (req)=>{
+    var isLogged = await SSOLogin.authenticateLogin(req);
+    var data;
+    if (isLogged.status) {
+        var name = isLogged.log.name;
+        var profilePic = isLogged.log.profilePic;
+        var email = isLogged.log.email;
+        data = {
+            WebTop: ` <div class="menusSection" id="lWebTop">
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('logDpMob')">
+                            <div class="imgDiv">
+                                <img class="profileImage" src="${profilePic}" alt="">
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
+                        </div>
+                    </div>`,
+
+
+            MobTop: `<div class="menusSection" id="lMobTop">
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('logDpMob')">
+                            <div class="imgDiv">
+                                <img class="profileImage" src="${profilePic}" alt="">
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
+                        </div>
+                    </div>`,
+
+            Dp:`<div class="dropdownContainer" id="logDpMob" style="display:none;" onclick="hideDropdown('logDpMob')">
+                    <div class="dropdownDiv" id="dropdownDiv" style="">
+                        <div class="dropDownProfile">
+                            <div class="profilePic">
+                                <div class="profileImg">
+                                    <img src="${profilePic}" alt="">
+                                </div>
+                            </div>
+                            <div class="userInfo">
+                                <p class="userInformation">${name}</p>
+                                <p class="userInformation">${email}</p>
+                            </div>
+                        </div>
+
+                        <div class="otherOptions" onclick="goto('/')">
+                            <i class="fa fa-home"></i>
+                            <span>Home</span>
+                        </div>
+
+                        <div class="otherOptions">
+                            <i class="fa fa-info-circle"></i>
+                            <span>About</span>
+                        </div>
+                        <div class="otherOptions">
+                            <i class="fa fa-comment"></i>
+                            <span>Help</span>
+                        </div>
+                        <div class="logoutLink" onclick="logout()">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                            
+                        </div>
+                    </div>
+                </div>`
         };
+    }else{
+        data = {
+            WebTop: `<div class="menusSection" id="nLogWebTop">
+                        <div class="menus homeMenu"> <a class="link" href="/">Dashboard</a> </div>
+                        <div class="menus aboutMenu"><a class="link" href="">About Us</a></div>
+                        <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
+                        <div class="menus loginMenu profileButton profileButtonWithoutBorder" id="loginButton" onclick="goto('/login')">
+                            <div class="imgDiv">
+                                <i class="profileImage fa fa-user"></i>
+                            </div>
+                        </div>
+                    </div>`,
+
+            MobTop: `<div class="menusSection" id="nLogMobTop"> 
+                        <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('nLogDpMob')">
+                            <div class="imgDiv">
+                                <i class="profileImage fa fa-user"></i>
+                            </div>
+                            <div class="dropdownIcon" id="dropdownIcon"> <i class="fa fa-caret-right"></i> </div>
+                        </div>
+                    </div>`,
+
+            Dp:`<div class="dropdownContainer" id="nLogDpMob" style="display:none;" onclick="hideDropdown('nLogDpMob')">
+                    <div class="dropdownDiv" id="dropdownDiv">
+                        <div class="otherOptions firstOption" style="color:aqua;">
+                            <i class="fa fa-table-columns"></i>
+                            <span>Home</span>
+                        </div>
+
+                        <div class="otherOptions">
+                            <i class="fa fa-info-circle"></i>
+                            <span>About</span>
+                        </div>
+                        <div class="otherOptions">
+                            <i class="fa fa-comment"></i>
+                            <span>Help</span>
+                        </div>
+                        <div class="logoutLink" onclick="goto('/login')">
+                            <i class="fa fa-sign-in"></i>
+                            <span>Login</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            `
+            };
     }
     return data;
 }

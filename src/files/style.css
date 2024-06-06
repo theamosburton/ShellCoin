@@ -32,7 +32,7 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     width: 100%;
     background-color: hsl(240deg 48.15% 10.59%);
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
     margin: 5px 20px;
 }
@@ -69,7 +69,7 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     width: 100%;
     /* border: 1px solid gray; */
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     padding-right: 20px;
 }
@@ -106,7 +106,7 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     background-color: #ed5aed;
 }
 .actionSection{
-    margin-top: 5px;
+    margin-top: 20px;
     width: 100%;
     min-height: 400px;
     background-image: url('../images/background-n.png');
@@ -212,10 +212,11 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     flex-direction: column;
 }
 .tokenStatSection .statTitle{
-    margin: 35px 0px 5px 0px;
+    margin: 5px 0px 5px 0px;
+    font-weight: bolder;
 }
 .tokenStatSection .mainTitle{
-    font-size: 30px;
+    font-size: 40px;
     font-family: Geometric;
     color: white;
     width: auto;
@@ -228,7 +229,7 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
     flex-direction: row;
     /* background-color: #9e239e; */
     border-radius: 20px;
-    max-width: 1000px;
+    /* max-width: 1000px; */
 }
 
 .tokenStatSection .statSection .leftStatSection, .tokenStatSection .statSection .rightStatSection{
@@ -312,7 +313,7 @@ background-color: rgb(14 14 40);
    
 }
 .aboutTokenSection .aboutTitle{
-    font-size: 50px;
+    font-size: 40px;
     font-family: Geometric;
     color: white;
     width: auto;
@@ -340,14 +341,18 @@ background-color: rgb(14 14 40);
     padding: 20px;
 }
 .aboutTokenSection .aboutSection .aboutLeftSection li{
-    font-size: 20px;
-    color: rgb(236, 236, 236);
-    font-family: Geometric;
-    margin-top: 10px;
+    font-size: 16px;
+    color: rgb(175, 175, 175);
+    margin-bottom: 20px;
     list-style:square;
+    font-weight: bold;
+}
+.aboutTokenSection .aboutSection .aboutLeftSection li .steps{
+    color: white;
+    font-family: Geometric;
+    font-size: 20px;
 }
 .aboutTokenSection .aboutSection .aboutRightSection .rightSectionBox{
-    box-shadow: 0px 0px 12px 2px;
     border-radius: 20px;
     width: 100%;
     display: flex;
@@ -358,7 +363,7 @@ background-color: rgb(14 14 40);
 }
 .aboutTokenSection .aboutSection .aboutRightSection img{
     /* width: 100%; */
-    height: 400px;
+    height: 360px;
 }
 .aboutTokenSection .aboutSection .aboutRightSection{
     display: flex;
@@ -419,7 +424,7 @@ background-color: rgb(14 14 40);
     width: 100%;
 }
 .howToSection .howToTitle{
-    font-size: 50px;
+    font-size: 40px;
     font-family: Geometric;
     color: white;
     width: auto;
@@ -442,12 +447,20 @@ background-color: rgb(14 14 40);
     padding: 20px 20px 0px 30px;
 }
 .howToSection .howSection .leftHowSection ul li{
-    color: rgb(236, 236, 236);
-   margin-top: 10px;
-   font-size: 20px;
+    color: rgb(172, 172, 172);
+    margin-top: 10px;
+    font-weight: bold;
     list-style: decimal;
-    font-family: Geometric;
+    font-family:sans-serif;
+    font-size: 16px;
 }
+.howToSection .howSection .leftHowSection ul li span{
+    font-family: Geometric;
+    color: white;
+    font-size: 20px;
+   
+}
+
 .howToSection .howSection .rightHowSection{
     width: 40%;
     display: flex;
@@ -566,6 +579,9 @@ background-color: rgb(14 14 40);
     height: 5px;
     border-radius: 5px;
 }
+
+
+
 .profileButton{
     display: flex;
     padding: 5px 10px;
@@ -574,31 +590,40 @@ background-color: rgb(14 14 40);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.profileButtonWithoutBorder{
+    border: none;
 }
 
 .profileButton .imgDiv{
-    width: 20px;
+    width: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
     border: 2px solid grey;
-    margin-right: 5px;
 }
 
 .profileButton .imgDiv .profileImage{
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ed5aed;
 
 }
-.profileButton .dropdownImage{
+.profileButton .dropdownIcon{
     width: 20px;
     height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ed5aed;
+    margin-left: 0px;
 }
 
 .profileButton .nameDiv{
@@ -619,7 +644,125 @@ background-color: rgb(14 14 40);
 .profileButton .nameDiv:hover{
     color:#ed5aed;
 }
+
+.dropdownContainer{
+    width: 100%;
+    z-index: 9999;
+    position: relative;
+}
+
+.dropdownDiv{
+    position: absolute;
+    min-width: 200px;
+    border: 1px solid white;
+    border-radius: 25px;
+    background-color:#9e239e;
+    padding: 10px;
+    z-index: 99999;
+    top: -10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+
+}
+.dropdownDiv .dropDownProfile{
+    background-color: #0e0e28;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-radius:  20px 20px 0px 0px;
+}
+.dropDownProfile .profilePic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdownDiv .profilePic .profileImg img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 3px solid white;
+}
+.dropDownProfile .userInfo{
+    width: 100%;
+    margin-left: 10px;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.userInformation{
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userInformation:nth-child(1){
+    font-family: Geometric;
+}
+
+
+.dropdownDiv .otherOptions, .dropdownDiv .logoutLink{
+    display: flex;
+    padding: 10px;
+    background-color: #0e0e28;
+    margin-top: 4px;
+    font-family: Geometric;
+    font-weight: bolder;
+    color: aliceblue;
+    min-width: 210px;
+    align-items: center;
+}
+
+.dropdownDiv .firstOption{
+    border-radius: 20px 20px 0px 0px;
+    padding: 15px 10px;
+    margin-top: 0px;
+}
+
+.dropdownDiv .otherOptions span, .logoutLink span{
+    margin-left: 15px;
+}
+.dropdownDiv .otherOptions i, .logoutLink i{
+    margin-left: 8px;
+}
+
+.dropdownDiv .logoutLink{
+    border-radius: 0px 0px 20px 20px;
+}
+
+.userInformation:nth-child(2){
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+#nLogMobTop, #lMobTop{
+    display: none;
+}
+
+#nLogWebTop, .lWebTop{
+    display: flex;
+}
+
+.dropdownDiv .otherOptions:hover, .dropdownDiv .logoutLink:hover{
+    color: aqua;
+    cursor: pointer;
+}
 @media screen and (max-width: 851px) {
+
+    #nLogMobTop, #lMobTop{
+        display: flex;
+    }
+
+    #nLogWebTop, .lWebTop{
+        display: none;
+    }
+    .dropdownDiv{
+        right: 25px;
+    }
     .howSection .shader{
         display: flex;
         flex-direction: column-reverse;
@@ -695,6 +838,7 @@ background-color: rgb(14 14 40);
     }
     .actionSection{
         background-position: center;
+        flex-direction: column-reverse;
     }
     .menusSection{
         display: none;

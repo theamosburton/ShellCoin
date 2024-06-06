@@ -3,20 +3,35 @@ function handleCredentialResponse(response) {
     // You can send this token to your server for further processing
 }
 
-function toggleMenus(){
-    var showMenus = document.getElementById('expandMenusIcon');
-    var hideMenus = document.getElementById('hideMenusIcon');
-    var hiddenMenus = document.getElementById('hiddenMenus');
-    if(hideMenus.style.display == 'none'){
-        hideMenus.style.display = 'flex';
-        hiddenMenus.style.display = 'flex';
-        showMenus.style.display = 'none';
-    }else{
-        hideMenus.style.display = 'none';
-        hiddenMenus.style.display = 'none';
-        showMenus.style.display = 'flex';
+
+function hideDropdown(id) {
+    var dropdown = document.getElementById(id);
+    if (dropdown) {
+        dropdown.style.display = 'none';
+    } else {
+        console.error('Element with id "' + id + '" not found.');
     }
 }
+
+function toggle(id){
+    var element = document.getElementById(id);
+    if (element.style.display == 'flex') {
+        if (dropdown = document.querySelectorAll('.dropdownIcon')) {
+            dropdown.forEach((dropdowns) => {
+                dropdowns.innerHTML = '<i class="fa fa-caret-right"></i>';
+            });
+        }
+        element.style.display = 'none';
+    } else {
+        element.style.display = 'flex';
+        if (dropdown = document.querySelectorAll('.dropdownIcon')) {
+            dropdown.forEach((dropdowns) => {
+                dropdowns.innerHTML = '<i class="fa fa-caret-down"></i>';
+            });
+        }
+    }
+}
+
 
 function logout(){
     logoutNow();
@@ -36,5 +51,6 @@ function logout(){
             }
         }
 }
-
-
+function goto(loc) {
+    window.location.href = loc;
+}
