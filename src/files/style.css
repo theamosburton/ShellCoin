@@ -773,6 +773,7 @@ background-color: rgb(14 14 40);
     margin-top: 100px;
     justify-content: center;
     flex-direction: column;
+    border-top: 1px solid rgb(219, 219, 219);
     
 }
 
@@ -985,6 +986,10 @@ background-color: rgb(14 14 40);
     }
     .footer .footerContent .footerLinkDivs .links{
         margin: 7px 20px 7px 50px;
+    }
+
+    .footer .footerTop{
+        width: 90%;
     }
     .v-spacer-tk{
         height: 35px;
