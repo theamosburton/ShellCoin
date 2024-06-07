@@ -780,7 +780,7 @@ background-color: rgb(14 14 40);
     position: relative;
     max-width: 1300px;
     width: 100%;
-    margin: 35px 20px 5px 20px;
+    margin: 35px 0px 5px 0px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -796,7 +796,7 @@ background-color: rgb(14 14 40);
     align-items: center;
     font-family: Geometric;
     color: rgb(198, 198, 198);
-    padding: 20px;
+    padding: 20px 0px;
 }
 
 .footer .footerContent .footerLinkDivs{
@@ -806,7 +806,7 @@ background-color: rgb(14 14 40);
     width: 100%;
     margin: 20px;
     margin-right: 0px;
-    margin-left: 40px;
+    /* margin-left: 40px; */
 }
 .footer .footerContent .footerLogo{
     width: 100%;
@@ -977,15 +977,14 @@ background-color: rgb(14 14 40);
 
 @media screen and (max-width: 550px) {
     .footer .footerContent{
-        position: relative;
-        max-width: 1300px;
-        width: 100%;
-        margin: 35px 20px 5px 20px;
-        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    
+        padding-top: 20px;
+    }
+    .footer .footerContent .footerLinkDivs{
+        margin: 20px 0px 20px 0px;
+    }
+    .footer .footerContent .footerLinkDivs .links{
+        margin: 7px 20px 7px 50px;
     }
     .v-spacer-tk{
         height: 35px;
