@@ -12,8 +12,8 @@ loadViews.dashboard = async (req)=>{
         data = {
             WebTop: ` <div class="menusSection" id="lWebTop">
                         <div class="menus homeMenu" > <a class="link" style="color: aqua;">Dashboard</a> </div>
-                        <div class="menus aboutMenu"><a class="link" href="">About Us</a></div>
-                        <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
+                        <div class="menus aboutMenu"><a class="link" href="/#aboutSection">About</a></div>
+                        <div class="menus contactMenu"><a class="link" href="/support">Support</a></div>
                         <div class="menus loginMenu profileButton" id="loginButton" onclick="toggle('logDpMob')">
                             <div class="imgDiv">
                                 <img class="profileImage" src="${profilePic}" alt="">
@@ -51,13 +51,13 @@ loadViews.dashboard = async (req)=>{
                             <span>Account</span>
                         </div>
 
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/#aboutSection')">
                             <i class="fa fa-info-circle"></i>
                             <span>About</span>
                         </div>
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/support')">
                             <i class="fa fa-comment"></i>
-                            <span>Help</span>
+                            <span>Support</span>
                         </div>
                         <div class="logoutLink" onclick="logout()">
                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -72,8 +72,8 @@ loadViews.dashboard = async (req)=>{
         data = {
             WebTop: `<div class="menusSection" id="nLogWebTop">
                         <div class="menus homeMenu"> <a class="link" href="/">Dashboard</a> </div>
-                        <div class="menus aboutMenu"><a class="link" href="">About Us</a></div>
-                        <div class="menus contactMenu"><a class="link" href="">Contact Us</a></div>
+                        <div class="menus aboutMenu"><a class="link" href="/#aboutSection">About</a></div>
+                        <div class="menus contactMenu"><a class="link" href="/support">Support</a></div>
                         <div class="menus loginMenu profileButton profileButtonWithoutBorder" id="loginButton" onclick="goto('/login')">
                             <div class="imgDiv">
                                 <i class="profileImage fa fa-user"></i>
@@ -97,13 +97,13 @@ loadViews.dashboard = async (req)=>{
                             <span>Home</span>
                         </div>
 
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/#aboutSection')">
                             <i class="fa fa-info-circle"></i>
-                            <span>About Us</span>
+                            <span>About</span>
                         </div>
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/support')">
                             <i class="fa fa-comment"></i>
-                            <span>Contact Us</span>
+                            <span>Support</span>
                         </div>
                         <div class="logoutLink" onclick="goto('/login')">
                             <i class="fa fa-sign-in"></i>
@@ -166,13 +166,13 @@ loadViews.account = async (req)=>{
                             <span>Home</span>
                         </div>
 
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/#aboutSection')">
                             <i class="fa fa-info-circle"></i>
                             <span>About</span>
                         </div>
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/support')">
                             <i class="fa fa-comment"></i>
-                            <span>Help</span>
+                            <span>Support</span>
                         </div>
                         <div class="logoutLink" onclick="logout()">
                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -211,13 +211,13 @@ loadViews.account = async (req)=>{
                             <span>Home</span>
                         </div>
 
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/#aboutSection')">
                             <i class="fa fa-info-circle"></i>
                             <span>About</span>
                         </div>
-                        <div class="otherOptions">
+                        <div class="otherOptions" onclick="goto('/support')">
                             <i class="fa fa-comment"></i>
-                            <span>Help</span>
+                            <span>Support</span>
                         </div>
                         <div class="logoutLink" onclick="goto('/login')">
                             <i class="fa fa-sign-in"></i>

@@ -213,9 +213,10 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
 }
 .tokenStatSection .statTitle{
     margin: 5px 0px 5px 0px;
-    font-weight: bolder;
 }
 .tokenStatSection .mainTitle{
+    padding-bottom: 4px;
+    border-bottom: 3px solid white;
     font-size: 40px;
     font-family: Geometric;
     color: white;
@@ -267,6 +268,7 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track, .topViewBox::-webkit-scr
 .leftStatBox .statTitle span, .rightStatBox .statTitle span{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
+    font-weight: bold;
 }
 
 .otherStats{
@@ -319,6 +321,12 @@ background-color: rgb(14 14 40);
     width: auto;
     margin-bottom: 10px;
     margin-left: 30px;
+}
+
+.aboutTokenSection .mainTitle{
+    padding-bottom: 4px;
+    border-bottom: 3px solid white;
+    display: inline;
 }
 
 .aboutTokenSection .aboutSection{
@@ -431,6 +439,12 @@ background-color: rgb(14 14 40);
     margin-bottom: 10px;
     margin-left: 35px;
 }
+
+.howToSection .howToTitle .mainTitle{
+    display: inline;
+    border-bottom: 3px solid white;
+    padding-bottom: 4px;
+}
 .howToSection .howSection{
     display: flex;
     justify-content: center;
@@ -447,11 +461,10 @@ background-color: rgb(14 14 40);
     padding: 20px 20px 0px 30px;
 }
 .howToSection .howSection .leftHowSection ul li{
-    color: rgb(172, 172, 172);
+    color: rgb(175, 175, 175);
     margin-top: 10px;
     font-weight: bold;
     list-style: decimal;
-    font-family:sans-serif;
     font-size: 16px;
 }
 .howToSection .howSection .leftHowSection ul li span{
@@ -751,6 +764,99 @@ background-color: rgb(14 14 40);
     color: aqua;
     cursor: pointer;
 }
+
+.footer{
+    background-color: #080811;
+    /* min-height: 200px; */
+    width: 100%;
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.footer .footerContent{
+    position: relative;
+    max-width: 1300px;
+    width: 100%;
+    margin: 35px 20px 5px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.footer .copyright{
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Geometric;
+    color: rgb(198, 198, 198);
+    padding: 20px;
+}
+
+.footer .footerContent .footerLinkDivs{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    width: 100%;
+    margin: 20px;
+    margin-right: 0px;
+    margin-left: 40px;
+}
+.footer .footerContent .footerLogo{
+    width: 100%;
+}
+.footer .footerContent .footerTop{
+    position: absolute;
+    /* width: 70%; */
+    padding: 5px;
+    box-shadow: 0px 0px 8px 2px #120912;
+    border-radius: 20px;
+    top: -130px;
+    background-color:rgb(54, 22, 183);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.footerTop .headMessage{
+    color: white;
+    font-size: 24px;
+    font-family: Geometric;
+    padding: 20px;
+}
+
+.footerTop .buttonDiv{
+    margin: 20px;
+    margin-top: 10px;
+}
+.footerTop .actionButton{
+    color: white;
+    font-size: samll;
+    font-family: Geometric;
+    padding: 5px 10px;
+    background-color: blueviolet;
+    border: 1px solid blueviolet;
+    border-radius: 3px;
+    display: inline;
+}
+
+.footerTop .actionButton:hover{
+    background-color: #9e239e;
+    cursor: pointer;
+}
+.footer .footerContent .footerLinkDivs .links{
+    font-family: Geometric;
+    cursor: pointer;
+    margin: 7px;
+}
+.footer .footerContent .footerLinkDivs .links:hover{
+    color: aqua;
+}
 @media screen and (max-width: 851px) {
 
     #nLogMobTop, #lMobTop{
@@ -870,6 +976,17 @@ background-color: rgb(14 14 40);
 
 
 @media screen and (max-width: 550px) {
+    .footer .footerContent{
+        position: relative;
+        max-width: 1300px;
+        width: 100%;
+        margin: 35px 20px 5px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    
+    }
     .v-spacer-tk{
         height: 35px;
     }

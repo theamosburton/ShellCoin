@@ -30,7 +30,16 @@
 .tokenStatSection{
     position: relative;
 }
+.tokenStatSection .statTitle {
+    font-size: 30px;
+    margin: 30px 30px 0px 30px;
+}
 
+.tokenStatSection .mainTitle {
+    border-bottom: 2px solid white;
+    padding-bottom: 5px;
+    font-size: 30px;
+}
 @media screen and (max-width: 851px) {
     .tokenStatSection .statSection {
         justify-content: flex-start;
