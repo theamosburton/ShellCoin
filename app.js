@@ -108,6 +108,10 @@ app.post('/auth/google', async (req, res) => {
 });
 
 
+app.get('/roadmap', (req, res) => {
+    res.render('roadmap');
+});
+
 // Starting Server
 app.listen(port, () => {
     
