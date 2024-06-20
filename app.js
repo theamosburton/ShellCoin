@@ -108,10 +108,17 @@ app.post('/auth/google', async (req, res) => {
     }
 });
 
+
+
+app.get('/roadmap', async (req, res) => {
+    res.render('roadmap');
+});
+
 const renderSitemap = (req, res) => {
-    res.set('Content-type','Application/xml')
+    res.set('Content-type','Application/xml');
     res.render('sitemap');
 };
+
 app.get('/sitemap', renderSitemap);
 app.get('/sitemap.xml', renderSitemap);
 // Starting Server
