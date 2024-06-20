@@ -10,6 +10,7 @@ const {Visit} = require('./controller/Visit');
 const { Database } = require('./controller/db');
 const { checkReferal } = require('./API/referal');
 const { loadViews } = require('./controller/makeViews');
+const { render } = require('ejs');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
@@ -107,11 +108,12 @@ app.post('/auth/google', async (req, res) => {
     }
 });
 
-
-app.get('/roadmap', (req, res) => {
-    res.render('roadmap');
-});
-
+const renderSitemap = (req, res) => {
+    res.set('Content-type','Application/xml')
+    res.render('sitemap');
+};
+app.get('/sitemap', renderSitemap);
+app.get('/sitemap.xml', renderSitemap);
 // Starting Server
 app.listen(port, () => {
     
