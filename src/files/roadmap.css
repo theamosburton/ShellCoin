@@ -109,7 +109,7 @@ h1 {
   width: 2rem;
   aspect-ratio: 1;
   background: var(--bgColor);
-  border: 0.3rem solid var(--accent-color);
+  border: 0.6rem solid var(--accent-color);
   border-radius: 50%;
   top: 50%;
 
@@ -162,6 +162,28 @@ h1 {
   z-index: -1;
   bottom: 0.25rem;
 }
+
+.blinking-dot {
+  width: 20px;
+  height: 20px;
+  background-color: green;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0;
+  }
+}
+
 
 @media (min-width: 40rem) {
   
