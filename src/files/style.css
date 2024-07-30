@@ -772,6 +772,7 @@ background-color: rgb(14 14 40);
     display: flex;
     margin-top: 100px;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     border-top: 1px solid rgb(219, 219, 219);
     
@@ -785,8 +786,6 @@ background-color: rgb(14 14 40);
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-
 }
 
 .footer .copyright{
@@ -814,11 +813,10 @@ background-color: rgb(14 14 40);
 }
 .footer .footerContent .footerTop{
     position: absolute;
-    /* width: 70%; */
     padding: 5px;
     box-shadow: 0px 0px 8px 2px #120912;
     border-radius: 20px;
-    top: -130px;
+    top: -150px;
     background-color:rgb(54, 22, 183);
     display: flex;
     flex-direction: column;
@@ -829,6 +827,12 @@ background-color: rgb(14 14 40);
     font-size: 24px;
     font-family: Geometric;
     padding: 20px;
+}
+
+.footerTop .headMessage #hint{
+    color: white;
+    font-size: 15px;
+    font-family: Geometric;
 }
 
 .footerTop .buttonDiv{
@@ -855,7 +859,11 @@ background-color: rgb(14 14 40);
     cursor: pointer;
     margin: 7px;
 }
-.footer .footerContent .footerLinkDivs .links:hover{
+.footer .footerContent .footerLinkDivs .links a{
+    color: white;
+    text-decoration: none;
+}
+.footer .footerContent .footerLinkDivs .links:hover, .footerContent .footerLinkDivs .links a:hover{
     color: aqua;
 }
 @media screen and (max-width: 851px) {
@@ -979,7 +987,8 @@ background-color: rgb(14 14 40);
 @media screen and (max-width: 550px) {
     .footer .footerContent{
         flex-direction: column;
-        padding-top: 20px;
+        padding-top: 30px;
+        align-items: center;
     }
     .footer .footerContent .footerLinkDivs{
         margin: 20px 0px 20px 0px;

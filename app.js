@@ -11,6 +11,7 @@ const { Database } = require('./controller/db');
 const { checkReferal } = require('./API/referal');
 const { loadViews } = require('./controller/makeViews');
 const { render } = require('ejs');
+const fs = require('fs');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cookieParser());
@@ -114,10 +115,31 @@ app.get('/roadmap', async (req, res) => {
     res.render('roadmap');
 });
 
+app.get('/terms-conditions', async (req, res) => {
+    var data = await loadViews.dashboard(req);
+    res.render('terms-conditions', {data});
+});
+
 const renderSitemap = (req, res) => {
     res.set('Content-type','Application/xml');
     res.render('sitemap');
 };
+
+app.get('/whitepaper', async (req, res) => {
+        const filePath = path.join(__dirname, 'src', 'files', 'Whitepaper_V1.pdf')
+
+        // Read the PDF file
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.error('Error reading PDF file:', err);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            // Set the content type to application/pdf
+            res.setHeader('Content-Type', 'application/pdf');
+            res.send(data);
+        });
+});
 
 app.get('/sitemap', renderSitemap);
 app.get('/sitemap.xml', renderSitemap);
