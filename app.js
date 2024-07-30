@@ -116,8 +116,12 @@ app.get('/roadmap', async (req, res) => {
 });
 
 app.get('/terms-conditions', async (req, res) => {
-    var data = await loadViews.dashboard(req);
+    var data = await loadViews.docPages(req);
     res.render('terms-conditions', {data});
+});
+app.get('/privacy-policy', async (req, res) => {
+    var data = await loadViews.docPages(req);
+    res.render('privacy-policy', {data});
 });
 
 const renderSitemap = (req, res) => {
